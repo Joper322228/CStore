@@ -1,0 +1,47 @@
+<apex:page >
+    <style>
+        html{
+            background-image: url("https://images.unsplash.com/photo-1468495244123-6c6c332eeece?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1021&amp;q=80");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+        label{
+            font-weight: bold;
+        }
+        button{
+            border-radius: 0px !important;
+            border: 1px solid black !important;
+            color: black !important;
+        }
+        button:hover{
+            border-radius: 8px !important;
+        }
+    </style>
+    
+    <head>
+        <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/>
+    </head>
+    
+    <apex:slds >
+    
+        <div class="slds-form" role="list" style=" position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        border-radius: 10px;
+        opacity: 0.9"> 
+    
+                    <h1 style="text-align: center; font-size: 25px; font-weight: 500; border-bottom: 1px solid; " >Thank you!</h1>
+    
+                
+        </div>
+
+    </apex:slds>
+</apex:page>

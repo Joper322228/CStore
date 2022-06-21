@@ -1,0 +1,11 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" controller="WebToLeadControllerPageController">
+
+    <apex:outputPanel id="form">
+        <apex:include pageName="WebToLead" id="WebToLead" rendered="{! !addedLead}"/>
+    </apex:outputPanel>
+
+    <apex:outputPanel id="ThankYouPage">
+        <apex:include pageName="WebToLeadThankYou" id="WebToLeadThankYou" rendered="{! addedLead}"/>
+    </apex:outputPanel>
+
+</apex:page>
