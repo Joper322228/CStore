@@ -8,6 +8,7 @@
 	<types>
 		<members>WebToLead</members>
 		<members>WebToLeadControllerPage</members>
+		<members>WebToLeadThankYou</members>
 		<name>ApexPage</name>
 	</types>
 	<types>
