@@ -1,0 +1,213 @@
+<apex:page showHeader="false">
+
+<style>
+    html{
+        background-image: url("https://images.unsplash.com/photo-1468495244123-6c6c332eeece?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1021&amp;q=80");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+    }
+    label{
+        font-weight: bold;
+    }
+    button{
+        border-radius: 0px !important;
+        border: 1px solid black !important;
+        color: black !important;
+    }
+    button:hover{
+        border-radius: 8px !important;
+    }
+</style>
+
+<head>
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/>
+</head>
+
+<apex:slds >
+
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" id="contactForm" >
+
+        <div class="demo-only slds-hidden" style="height: 4rem;" id='SuccessMessage'>
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+                    <span class="slds-assistive-text">success</span>
+                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}" />
+                        </svg>
+                    </span>
+                    <div class="slds-notify__content">
+                        <h2>Your contact was added</h2>
+                    </div>
+                    <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close" onclick='successToastLaunch()'>
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" />
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-only slds-hidden" style="height: 4rem;" id='ErrorMessage'>
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}" />
+                        </svg>
+                    </span>
+                    <div class="slds-notify__content">
+                        <h2>Please fill all required fields.</h2>
+                    </div>
+                    <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close" onclick='errorToastLaunch()'>
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" />
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    <div class="slds-form" role="list" style="width: 37%; position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    opacity: 0.95"> 
+        
+
+            <input type='hidden' name="oid" value="00D7Q000006G1tc"/>
+            <input type='hidden' name="retURL" value="https://nicepc-developer-edition.eu44.force.com/WebToLead?addedLead=true"/>
+
+                <h1 style="text-align: center; font-size: 25px; font-weight: 500; border-bottom: 1px solid; " >Contact Form</h1>
+
+                <div class="slds-form__row" style="padding-top: 10px">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_horizontal slds-is-editing ">
+                        <label class="slds-form-element__label" for="first_name"><abbr class="slds-required" title="required">* </abbr>First Name</label>
+                            <div class="slds-form-element__control">
+                                <input  id="first_name" maxlength="40" name="first_name" size="20" type="text" placeholder="Enter your first name" class="slds-input" required="true"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                        <label class="slds-form-element__label" for="last_name"><abbr class="slds-required" title="required">* </abbr>Last Name</label>
+                        <div class="slds-form-element__control">
+                            <input  id="last_name" maxlength="80" name="last_name" size="20" type="text" placeholder="Enter your last name" class="slds-input" required="true"/>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form__row">
+
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                        <label class="slds-form-element__label" for="email"><abbr class="slds-required" title="required">* </abbr>Email</label>
+                        <div class="slds-form-element__control">
+                            <input  id="email" maxlength="80" name="email" size="20" type="email" placeholder="Enter your email" class="slds-input" required="true"/>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                        <label class="slds-form-element__label" for="phone">Phone</label>
+                        <div class="slds-form-element__control">
+                            <input  id="phone" maxlength="40" name="phone" size="20" type="text" placeholder="Enter your phone" class="slds-input"/>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="slds-form__row">
+
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                        <label class="slds-form-element__label" for="company">Company</label>
+                        <div class="slds-form-element__control">
+                            <input  id="company" maxlength="40" name="company" size="20" type="text" placeholder="Enter your company" class="slds-input"/>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form__item" role="listitem"></div>
+
+                </div>
+
+                <div class="slds-form__row">
+
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                        <label class="slds-form-element__label" for="city">City</label>
+                        <div class="slds-form-element__control">
+                            <input  id="city" maxlength="40" name="city" size="20" type="text" placeholder="Enter your city" class="slds-input" />
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                        <label class="slds-form-element__label" for="state">State/Province</label>
+                        <div class="slds-form-element__control">
+                            <input  id="state" maxlength="20" name="state" size="20" type="text" placeholder="Enter your state/province" class="slds-input"/>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="slds-form__row" style=" padding: 5px">
+                    <button type="submit" name="submit" class="slds-button slds-button_outline-brand" style="width: 20%; margin: 0 auto;" onclick="validateForm()">Submit</button>
+                </div>
+                
+
+        
+    </div>
+</form>
+</apex:slds>
+    
+<script>
+
+    function successToastLaunch(){
+        var element = document.getElementById("SuccessMessage");
+        element.classList.toggle("slds-hidden");
+    }
+
+    function errorToastLaunch(){
+        var element = document.getElementById("ErrorMessage");
+        element.classList.toggle("slds-hidden");
+    }
+
+    function validateForm(){
+
+        var firstName = document.forms["contactForm"]["first_name"].value;
+        var lastName = document.forms["contactForm"]["last_name"].value;
+        var email = document.forms["contactForm"]["email"].value;
+       
+
+
+        if((firstName != null && lastName != null && email != null) && (firstName != "" && lastName != "" && email != "")){
+            // successToastLaunch();
+        } else{
+            errorToastLaunch();
+        }
+
+    }
+</script>
+
+
+</apex:page>
