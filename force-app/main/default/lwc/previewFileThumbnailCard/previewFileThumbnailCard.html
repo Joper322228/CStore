@@ -16,16 +16,14 @@
                     icon-name={iconName}
                     alternative-text={file.Title}
                     title={file.Title}
-                    size="xx-small"
-                  >
-                    <span class="slds-assistive-text"
-                      >{file.Title}.{file.Extension}</span
-                    >
+                    size="xx-small">
+                      <span class="slds-assistive-text">{file.Title}.{file.Extension}</span>
                   </lightning-icon>
                   <div class="slds-media__body slds-var-p-left_xx-small">
-                    <span class="slds-file__text slds-truncate" title={file.Title}
-                      >{file.Title}.{file.Extension}</span
-                    >
+                    <span class="slds-file__text slds-truncate" title={file.Title}>{file.Title}.{file.Extension}</span>
+                    <template if:true={file.IsProfile}>
+                      <span class="slds-file__text slds-truncate">This image is Profile</span>
+                    </template>
                   </div>
                 </div>
               </figcaption>
@@ -39,8 +37,13 @@
                 <lightning-menu-item
                   value="Set as profile image"
                   label="Set as profile image"
-                  onclick={handleProfileImage}
-                ></lightning-menu-item>
+                  onclick={handleProfileImage}>
+                </lightning-menu-item>
+                <lightning-menu-item
+                  value="Delete"
+                  label="Delete"
+                  onclick={handleDeleteImage}>
+                </lightning-menu-item>
               </lightning-button-menu>
             </div>
           </div>

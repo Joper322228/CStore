@@ -26,9 +26,11 @@ export default class CreateNewProduct extends LightningElement {
     modelField = MODEL_FIELD;
     codeField = CODE_FIELD;
     standartPrice = undefined;
+    wiredActivities;
     nameForPrint;
     isAddedPricebook = false;
     idForImage = '';
+    idForProfileImage = '';
     loaded = false;
     @track files = [];
     @track fileList;;
@@ -45,45 +47,58 @@ export default class CreateNewProduct extends LightningElement {
         this.nameForPrint = event.target.value;
     }
 
-    @wire(getVersionFiles, { recordId: "$idForImage" })
-    fileResponse(value) {
-        this.isLoaded = true;
-        this.wiredActivities = value;
-        const { data, error } = value;
-        this.fileList = "";
-        this.files = [];
-        if (data) {
-        this.fileList = data;
-        for (let i = 0; i < this.fileList.length; i++) {
-            let file = {
-            Id: this.fileList[i].Id,
-            Title: this.fileList[i].Title,
-            Extension: this.fileList[i].FileExtension,
-            ContentDocumentId: this.fileList[i].ContentDocumentId,
-            ContentDocument: this.fileList[i].ContentDocument,
-            CreatedDate: this.fileList[i].CreatedDate,
-            thumbnailFileCard:
-                "/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=" +
-                this.fileList[i].Id +
-                "&operationContext=CHATTER&contentId=" +
-                this.fileList[i].ContentDocumentId,
-            downloadUrl:
-                "/sfc/servlet.shepherd/document/download/" +
-                this.fileList[i].ContentDocumentId
-            };
-            this.files.push(file);
-        }
-        this.loaded = true;
-        this.isLoaded = true;
-        } else if (error) {
-        this.dispatchEvent(
-            new ShowToastEvent({
-            title: "Error loading Files",
-            message: error.body.message,
-            variant: "error"
-            })
-        );
-        }
+    
+    handleImages() {
+        getVersionFiles({ recordId: this.idForImage })
+        .then((result) => {
+            this.isLoaded = true;
+            this.fileList = "";
+            this.files = [];
+            if (result) {
+                this.fileList = result;
+                for (let i = 0; i < this.fileList.length; i++) {
+                    let file = {
+                    Id: this.fileList[i].Id,
+                    Title: this.fileList[i].Title,
+                    Extension: this.fileList[i].FileExtension,
+                    ContentDocumentId: this.fileList[i].ContentDocumentId,
+                    ContentDocument: this.fileList[i].ContentDocument,
+                    CreatedDate: this.fileList[i].CreatedDate,
+                    IsProfile : false,
+                    thumbnailFileCard:
+                        "/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=" +
+                        this.fileList[i].Id +
+                        "&operationContext=CHATTER&contentId=" +
+                        this.fileList[i].ContentDocumentId,
+                    downloadUrl:
+                        "/sfc/servlet.shepherd/document/download/" +
+                        this.fileList[i].ContentDocumentId
+                    };
+                    if(this.idForProfileImage == file.Id){
+                        file.IsProfile = true;
+                    }
+                    this.files.push(file);
+                }
+                this.loaded = true;
+                this.isLoaded = true;
+            } else {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                    title: "Unexpected error",
+                    variant: "error"
+                    })
+                );
+            }
+        })
+        .catch((error)=>{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                title: "Error loading Files",
+                message: error.body.message,
+                variant: "error"
+                })
+            );
+        })
     }
 
     handleSuccess(event) {
@@ -91,7 +106,6 @@ export default class CreateNewProduct extends LightningElement {
         setStandartPrice({ newProductId: event.detail.id, standartPrice: this.standartPrice })
             .then((result) => {
                 if(result == true){
-                    console.log(event.detail.id);
                     const evt = new ShowToastEvent({
                         title: 'Product created',
                         message: 'Record Name: ' + this.nameForPrint,
@@ -118,7 +132,7 @@ export default class CreateNewProduct extends LightningElement {
 
     handleUploadFinished(event){
         const uploadedFiles = event.detail.files;
-        refreshApex(this.wiredActivities);
+        this.handleImages();
         this.dispatchEvent(
           new ShowToastEvent({
             title: "Success!",
@@ -128,13 +142,21 @@ export default class CreateNewProduct extends LightningElement {
         );
     }
 
+    handleUpdateList(event){
+        this.handleImages();
+    }
+
+    handleUpdateProfileImage(event){
+        this.idForProfileImage = event.detail;
+        this.handleImages();
+    }
+
     handleButtonChange(){ 
         var close = this.idForImage;
         const closeclickedevt = new CustomEvent('closeclicked', {
             detail: { close },
         });
-    
-        // Fire the custom event
+
         this.dispatchEvent(closeclickedevt); 
     }
 }

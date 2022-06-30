@@ -1,4 +1,4 @@
-public with sharing class ManageProductProfileImage {
+public with sharing class ManageProductImage {
     
     @AuraEnabled
     public static Boolean setProfileImage(String recordId, String url){
@@ -7,6 +7,12 @@ public with sharing class ManageProductProfileImage {
         productForUpdate.DisplayUrl = url;
         update productForUpdate;
         return true;
+    }
+
+    @AuraEnabled
+    public static void deleteImage(Id imageId){
+        ContentDocument contentForDelete = [SELECT Id FROM ContentDocument WHERE Id =: imageId LIMIT 1];
+        delete contentForDelete;
     }
 
 }

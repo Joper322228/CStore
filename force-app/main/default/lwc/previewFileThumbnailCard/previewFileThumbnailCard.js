@@ -1,6 +1,8 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import setProfileImage from '@salesforce/apex/ManageProductProfileImage.setProfileImage';
+import setProfileImage from '@salesforce/apex/ManageProductImage.setProfileImage';
+import deleteImage from '@salesforce/apex/ManageProductImage.deleteImage';
+
 
 export default class PreviewFileThumbnailCard extends LightningElement {
     @api file;
@@ -58,6 +60,34 @@ export default class PreviewFileThumbnailCard extends LightningElement {
                 variant: 'success',
             });
             this.dispatchEvent(evt);
+            const updateProfileImage = new CustomEvent("updateprofileimage", {
+                detail : this.file.Id
+            });
+            this.dispatchEvent(updateProfileImage);
+        })
+        .catch((error) => {
+            const evt = new ShowToastEvent({
+                title: 'Sory we got unexpected error',
+                message: 'Error message:' + error,
+                variant: 'error',
+            });
+            this.dispatchEvent(evt);
+        })
+    }
+
+    handleDeleteImage(){
+        deleteImage({ imageId : this.file.ContentDocumentId })
+        .then((result) => {
+            const evt = new ShowToastEvent({
+                title: 'Image is deleted',
+                message: 'Name of image: ' + this.file.Title,
+                variant: 'success',
+            });
+            this.dispatchEvent(evt);
+            const updateImageListEvent = new CustomEvent("updateimagelist", {
+                detail : this.file.Id
+            });
+            this.dispatchEvent(updateImageListEvent);
         })
         .catch((error) => {
             const evt = new ShowToastEvent({
