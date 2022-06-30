@@ -1,0 +1,33 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Edit product</h1>
+            </div>
+
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-record-edit-form record-id={recordId} object-api-name="Contact">
+
+                    <lightning-messages></lightning-messages>
+
+                    <lightning-input-field field-name={nameField} onchange={handleNameForPrint}></lightning-input-field>
+                    <lightning-input-field field-name={familyField}></lightning-input-field>
+                    <lightning-input-field field-name={markField}></lightning-input-field>
+                    <lightning-input-field field-name={amountField}></lightning-input-field>
+                    <lightning-input-field field-name={modelField}></lightning-input-field>
+                    <lightning-input-field field-name={codeField}></lightning-input-field>
+
+                    <lightning-input required type="number" formatter="currency" step="0.01" label="Standart Price" onchange={handleStandartPriceChange}></lightning-input>
+
+                    <div class="slds-align_absolute-center slds-p-around_medium">
+                        <lightning-button class="slds-m-around_xx-small" label="Cancel" onclick={handleCloseModal}></lightning-button>
+                        <lightning-button class="slds-m-around_xx-small" label="Create Contact" type="submit" variant="brand" ></lightning-button>
+                    </div>
+
+                </lightning-record-edit-form>
+            </div>
+        </div>
+      </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

@@ -1,0 +1,82 @@
+<template>
+    
+    <div class="spinner">
+        <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" >
+    <div class="slds-modal__container">
+    <lightning-card >
+        <template if:false={isAddedPricebook}>
+            <header class="slds-modal__header">
+                <h2  class="slds-text-heading_medium slds-hyphenate">New Product</h2>
+            </header>
+            <div class="slds-m-around_medium">
+                <lightning-record-edit-form object-api-name={productApi} onsuccess={handleSuccess}>
+
+                    <lightning-input-field field-name={nameField} onchange={handleNameForPrint}></lightning-input-field>
+                    <lightning-input-field field-name={familyField}></lightning-input-field>
+                    <lightning-input-field field-name={markField}></lightning-input-field>
+                    <lightning-input-field field-name={amountField}></lightning-input-field>
+                    <lightning-input-field field-name={modelField}></lightning-input-field>
+                    <lightning-input-field field-name={codeField}></lightning-input-field>
+
+                    <lightning-input required type="number" formatter="currency" step="0.01" label="Standart Price" onchange={handleStandartPriceChange}></lightning-input>
+
+                   
+                    <footer style="margin-top: 20px; margin-bottom: 20px">
+                            <lightning-button class="slds-m-right_x-small" type="submit" label="Save&amp;Next" variant="brand" ></lightning-button>
+                            <lightning-button type="close" label="Close" variant="neutral" onclick={handleButtonChange}></lightning-button>
+                    </footer>
+                    
+                </lightning-record-edit-form>
+            </div>
+        </template>
+        <template if:true={isAddedPricebook}>
+
+            <header class="slds-modal__header">
+                <h2  class="slds-text-heading_medium slds-hyphenate">Add images</h2>
+            </header>
+
+            <div style="margin-left:35%">
+                <lightning-file-upload
+                    label="Attach Files"
+                    name="uploadFile"
+                    accept={acceptedFormats}
+                    record-id={idForImage}
+                    onuploadfinished={handleUploadFinished}
+                    multiple>
+                </lightning-file-upload>
+            </div>
+            <div style="margin-left:10%">
+            <div class="slds-page-header__row
+                slds-var-m-top_x-small
+                slds-var-m-left_medium
+                slds-grid slds-wrap">
+                <ul class="slds-grid slds-wrap slds-gutters">
+                    <template if:true={loaded}>
+                        <template for:each={files} for:item="file">
+                        <c-preview-file-thumbnail-card
+                            key={file.Id}
+                            file={file}
+                            record-id={idForImage}
+                            thumbnail={file.thumbnailFileCard}>
+                        </c-preview-file-thumbnail-card>
+                        </template>
+                    </template>
+                </ul>
+            </div>
+        </div>
+            <footer style="margin: 20px">
+                <lightning-button type="submit" label="Close" variant="brand" onclick={handleButtonChange}></lightning-button>
+            </footer>
+        </template>
+    </lightning-card>
+    </div>
+    </section>
+
+    
+</template>

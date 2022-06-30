@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride, force:lightningQuickAction, lightning:isUrlAddressable" access="global"> 
+    <aura:attribute name="message" type="String" default="Close Not Clicked"/>
+    <!-- your Workspace api tag should be there to make it work -->
+    <lightning:workspaceAPI aura:id="workspace"/> 
+    <c:createNewProduct oncloseclicked="{!c.redirectToRecord}"></c:createNewProduct>
+</aura:component>	
