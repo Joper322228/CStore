@@ -99,4 +99,9 @@ export default class PreviewFileThumbnailCard extends LightningElement {
         })
     }
 
+    filePreview(){
+        const showPreview = this.template.querySelector("c-preview-file-modal");
+        showPreview.show();
+    }
+
 }
