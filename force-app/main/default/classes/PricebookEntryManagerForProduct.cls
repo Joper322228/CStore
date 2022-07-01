@@ -23,21 +23,20 @@ public with sharing class PricebookEntryManagerForProduct {
     @AuraEnabled
     public static void updateStandartPricebook(Id productId, Double newStandartPrice){
         
-        PriceBook2 standartPricebookId = [SELECT Id FROM PriceBook2  WHERE IsStandard=True LIMIT 1];
-        PricebookEntry pricebookEntry = [SELECT Id, UnitPrice FROM PricebookEntry WHERE PriceBook2Id =: standartPricebookId.Id AND Product2Id =: productId LIMIT 1];
+        List<PriceBook2> standartPricebookId = [SELECT Id FROM PriceBook2  WHERE IsStandard=True LIMIT 1];
+        List<PricebookEntry> pricebookEntry = [SELECT Id, UnitPrice FROM PricebookEntry WHERE PriceBook2Id =: standartPricebookId[0].Id AND Product2Id =: productId LIMIT 1];
         
-        pricebookEntry.UnitPrice = newStandartPrice;
-        System.System.debug(pricebookEntry);
+        pricebookEntry[0].UnitPrice = newStandartPrice;
         update pricebookEntry;
     }
 
     @AuraEnabled
     public static Double getStandartPrice(Id productId){
         
-        PriceBook2 standartPricebookId = [SELECT Id FROM PriceBook2  WHERE IsStandard=True LIMIT 1];
-        PricebookEntry pricebookEntry = [SELECT Id, UnitPrice FROM PricebookEntry WHERE PriceBook2Id =: standartPricebookId.Id AND Product2Id =: productId LIMIT 1];
+        List<PriceBook2> standartPricebookId = [SELECT Id FROM PriceBook2  WHERE IsStandard=True LIMIT 1];
+        List<PricebookEntry> pricebookEntry = [SELECT Id, UnitPrice FROM PricebookEntry WHERE PriceBook2Id =: standartPricebookId[0].Id AND Product2Id =: productId LIMIT 1];
         
-        return pricebookEntry.UnitPrice;
+        return pricebookEntry[0].UnitPrice;
     }
 
 }

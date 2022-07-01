@@ -11,19 +11,24 @@ public with sharing class ManageProductImage {
     }
 
     @AuraEnabled
-    public static void deleteImage(Id imageId){
-        ContentDocument contentForDelete = [SELECT Id FROM ContentDocument WHERE Id =: imageId LIMIT 1];
-        delete contentForDelete;
+    public static void deleteImage(String imageId){
+        List<ContentDocument> contentForDelete = [SELECT Id FROM ContentDocument WHERE Id =: imageId LIMIT 1];
+        if(contentForDelete.size() > 0){
+            delete contentForDelete;
+        }
+        return;
     }
 
     @AuraEnabled
     public static String getProfileImageId(Id productId){
         
-        Product2 productWithDisplayUrl = [SELECT Id, DisplayUrl FROM Product2 WHERE Id =: productId];
+        List<Product2> productWithDisplayUrl = [SELECT Id, DisplayUrl FROM Product2 WHERE Id =: productId];
 
-        System.debug(productWithDisplayUrl.DisplayUrl.replaceAll('/sfc/servlet.shepherd/document/download/', ''));
-        System.debug(productWithDisplayUrl);
-
-        return productWithDisplayUrl.DisplayUrl.replaceAll('/sfc/servlet.shepherd/document/download/', '');
+        if(productWithDisplayUrl.size() > 0){
+            if(productWithDisplayUrl[0].DisplayUrl != null){
+                return productWithDisplayUrl[0].DisplayUrl.replaceAll('/sfc/servlet.shepherd/document/download/', '');
+            }
+        }
+        return '';
     }
 }
