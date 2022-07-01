@@ -26,14 +26,13 @@ export default class CreateNewProduct extends LightningElement {
     modelField = MODEL_FIELD;
     codeField = CODE_FIELD;
     standartPrice = undefined;
-    wiredActivities;
     nameForPrint;
     isAddedPricebook = false;
     idForImage = '';
     idForProfileImage = '';
     loaded = false;
     @track files = [];
-    @track fileList;;
+    @track fileList;
 
     get acceptedFormats() {
         return ['.pdf','.png','.jpg'];
@@ -74,7 +73,7 @@ export default class CreateNewProduct extends LightningElement {
                         "/sfc/servlet.shepherd/document/download/" +
                         this.fileList[i].ContentDocumentId
                     };
-                    if(this.idForProfileImage == file.Id){
+                    if(this.idForProfileImage == file.ContentDocumentId){
                         file.IsProfile = true;
                     }
                     this.files.push(file);

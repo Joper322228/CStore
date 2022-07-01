@@ -61,7 +61,7 @@ export default class PreviewFileThumbnailCard extends LightningElement {
             });
             this.dispatchEvent(evt);
             const updateProfileImage = new CustomEvent("updateprofileimage", {
-                detail : this.file.Id
+                detail : this.file.ContentDocumentId
             });
             this.dispatchEvent(updateProfileImage);
         })
