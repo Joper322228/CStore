@@ -1,66 +1,53 @@
 <template>
-    <!-- <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
-        <div class="slds-modal__container">
+    <lightning-record-edit-form record-id={recordId} object-api-name="Product2" onsuccess={handleSuccess}>
 
-            <div class="slds-modal__header">
-                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Edit product</h1>
-            </div>
+        <lightning-messages></lightning-messages>
 
-            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> -->
-                <lightning-record-edit-form record-id={recordId} object-api-name="Product2" onsuccess={handleSuccess}>
+        <lightning-input-field field-name={nameField}></lightning-input-field>
+        <lightning-input-field field-name={familyField}></lightning-input-field>
+        <lightning-input-field field-name={markField}></lightning-input-field>
+        <lightning-input-field field-name={amountField}></lightning-input-field>
+        <lightning-input-field field-name={modelField}></lightning-input-field>
+        <lightning-input-field field-name={codeField}></lightning-input-field>
 
-                    <lightning-messages></lightning-messages>
+        <lightning-input value={standartPrice} required type="number" 
+            formatter="currency" step="0.01" label="Standart Price" onchange={handleStandartPriceChange}></lightning-input>
 
-                    <lightning-input-field field-name={nameField}></lightning-input-field>
-                    <lightning-input-field field-name={familyField}></lightning-input-field>
-                    <lightning-input-field field-name={markField}></lightning-input-field>
-                    <lightning-input-field field-name={amountField}></lightning-input-field>
-                    <lightning-input-field field-name={modelField}></lightning-input-field>
-                    <lightning-input-field field-name={codeField}></lightning-input-field>
-
-                    <lightning-input value={standartPrice} required type="number" 
-                    formatter="currency" step="0.01" label="Standart Price" onchange={handleStandartPriceChange}></lightning-input>
-
-                    <div style="margin-left:35%">
-                        <lightning-file-upload
-                            label="Attach Files"
-                            name="uploadFile"
-                            accept={acceptedFormats}
-                            record-id={recordId}
-                            onuploadfinished={handleUploadFinished}
-                            multiple>
-                        </lightning-file-upload>
-                    </div>
-                    <div style="margin-left:5%">
-                        <div class="slds-page-header__row
-                            slds-var-m-top_x-small
-                            slds-var-m-left_medium
-                            slds-grid slds-wrap">
-                            <ul class="slds-grid slds-wrap slds-gutters">
-                                <template if:true={loaded}>
-                                    <template for:each={files} for:item="file">
-                                    <c-preview-file-thumbnail-card
-                                        onupdateimagelist={handleUpdateList}
-                                        onupdateprofileimage={handleUpdateProfileImage}
-                                        key={file.Id}
-                                        file={file}
-                                        record-id={recordId}
-                                        thumbnail={file.thumbnailFileCard}>
-                                    </c-preview-file-thumbnail-card>
-                                    </template>
-                                </template>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="slds-align_absolute-center slds-p-around_medium">
-                        <lightning-button class="slds-m-around_xx-small" label="Close" onclick={handleCloseModal}></lightning-button>
-                        <lightning-button class="slds-m-around_xx-small" label="Save changes" type="submit" variant="brand" ></lightning-button>
-                    </div>
-
-                </lightning-record-edit-form>
-            <!-- </div>
+        <div style="margin-left:35%">
+            <lightning-file-upload
+                name="uploadFile"
+                accept={acceptedFormats}
+                record-id={recordId}
+                onuploadfinished={handleUploadFinished}
+                multiple>
+            </lightning-file-upload>
         </div>
-      </section>
-    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div> -->
+        <div style="margin-left:5%">
+            <div class="slds-page-header__row
+                slds-var-m-top_x-small
+                slds-var-m-left_medium
+                slds-grid slds-wrap">
+                <ul class="slds-grid slds-wrap slds-gutters">
+                    <template if:true={loaded}>
+                        <template for:each={files} for:item="file">
+                            <c-preview-file-thumbnail-card
+                                onupdateimagelist={handleUpdateList}
+                                onupdateprofileimage={handleUpdateProfileImage}
+                                key={file.Id}
+                                file={file}
+                                record-id={recordId}
+                                thumbnail={file.thumbnailFileCard}>
+                            </c-preview-file-thumbnail-card>
+                        </template>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slds-align_absolute-center slds-p-around_medium">
+            <lightning-button class="slds-m-around_xx-small" label="Close" onclick={handleCloseModal}></lightning-button>
+            <lightning-button class="slds-m-around_xx-small" label="Save" type="submit" variant="brand" ></lightning-button>
+        </div>
+
+    </lightning-record-edit-form>
 </template>

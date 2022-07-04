@@ -125,12 +125,23 @@ export default class EditProduct extends LightningElement {
         this.isLoaded = true;
         updateStandartPricebook({ productId: this.recordId, newStandartPrice: this.standartPrice })
             .then((result) => {
+                if(this.files.length <= 5){
+                    
                     const evt = new ShowToastEvent({
                         title: 'Product edited',
                         variant: 'success',
                     });
                     this.dispatchEvent(evt);
-                    this.isLoaded = false;
+                } else{
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                        title: "You cant upload more than 5 images",
+                        message: "Please delete images that you dont need",
+                        variant: "Error"
+                        })
+                    );
+                }
+                this.isLoaded = false;
             })
             .catch((error) => {
                 const evt = new ShowToastEvent({
@@ -141,6 +152,22 @@ export default class EditProduct extends LightningElement {
                 this.isLoaded = false;
             })
             
+            if(this.files.length <= 5){
+                var close = this.idForImage;
+                const closeclickedevt = new CustomEvent('closeclicked', {
+                    detail: { close },
+                });
+    
+                this.dispatchEvent(closeclickedevt); 
+            } else{
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                      title: "You cant upload more than 5 images",
+                      message: "Please delete images that you dont need",
+                      variant: "Error"
+                    })
+                  );
+            }
     }
 
     handleUploadFinished(event){
@@ -165,11 +192,21 @@ export default class EditProduct extends LightningElement {
     }
 
     handleCloseModal(){ 
-        var close = this.idForImage;
-        const closeclickedevt = new CustomEvent('closeclicked', {
-            detail: { close },
-        });
+        if(this.files.length <= 5){
+            var close = this.idForImage;
+            const closeclickedevt = new CustomEvent('closeclicked', {
+                detail: { close },
+            });
 
-        this.dispatchEvent(closeclickedevt); 
+            this.dispatchEvent(closeclickedevt); 
+        } else{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "You cant upload more than 5 images",
+                  message: "Please delete images that you dont need",
+                  variant: "Error"
+                })
+              );
+        }
     }
 }

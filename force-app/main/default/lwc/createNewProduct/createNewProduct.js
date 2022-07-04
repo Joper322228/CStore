@@ -119,7 +119,6 @@ export default class CreateNewProduct extends LightningElement {
             .catch((error) => {
                 const evt = new ShowToastEvent({
                     title: 'Please fill standart price field',
-                    
                     variant: 'error',
                 });
                 this.dispatchEvent(evt);
@@ -151,11 +150,21 @@ export default class CreateNewProduct extends LightningElement {
     }
 
     handleButtonChange(){ 
-        var close = this.idForImage;
-        const closeclickedevt = new CustomEvent('closeclicked', {
-            detail: { close },
-        });
+        if(this.files.length <= 5){
+            var close = this.idForImage;
+            const closeclickedevt = new CustomEvent('closeclicked', {
+                detail: { close },
+            });
 
-        this.dispatchEvent(closeclickedevt); 
+            this.dispatchEvent(closeclickedevt); 
+        } else{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "You cant upload more than 5 images",
+                  message: "Please delete images that you dont need",
+                  variant: "Error"
+                })
+              );
+        }
     }
 }
