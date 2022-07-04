@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,force:lightningQuickActionWithoutHeader, lightning:isUrlAddressable" access="global">
+    <aura:attribute name="message" type="String" default="Close Not Clicked"/>
+    <!-- your Workspace api tag should be there to make it work -->
+    <lightning:workspaceAPI aura:id="workspace"/>     
+    <c:editProduct recordId="{!v.recordId}" oncloseclicked="{!c.handleFilterChange}"></c:editProduct>
+</aura:component>	
