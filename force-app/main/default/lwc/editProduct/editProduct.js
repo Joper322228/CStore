@@ -28,7 +28,7 @@ export default class EditProduct extends LightningElement {
     idForProfileImage;
     loaded = false;
     @track files = [];
-    @track fileList;;
+    @track fileList;
 
     get acceptedFormats() {
         return ['.pdf','.png','.jpg'];
