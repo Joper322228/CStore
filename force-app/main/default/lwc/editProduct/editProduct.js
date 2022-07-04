@@ -152,7 +152,22 @@ export default class EditProduct extends LightningElement {
                 this.isLoaded = false;
             })
             
-        
+            if(this.files.length <= 5){
+                var close = this.idForImage;
+                const closeclickedevt = new CustomEvent('closeclicked', {
+                    detail: { close },
+                });
+    
+                this.dispatchEvent(closeclickedevt); 
+            } else{
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                      title: "You cant upload more than 5 images",
+                      message: "Please delete images that you dont need",
+                      variant: "Error"
+                    })
+                  );
+            }
     }
 
     handleUploadFinished(event){
