@@ -1,0 +1,102 @@
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>
+    <lightning-card>
+        <div class="slds-m-around_medium">
+        
+            <div class="slds-m-bottom_small">
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto" padding="around-large">
+                        <div style=" margin: auto; width: 20%;">
+                            <lightning-input type="text"
+                                value={name}
+                                label="Product Name"
+                                onchange={handleName}>
+                            </lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto" padding="around-large">
+                            <lightning-combobox
+                                name="family"
+                                label="Family"
+                                value={family}
+                                placeholder="Select family"
+                                options={options}
+                                onchange={handleFamily} >
+                            </lightning-combobox>
+                        </lightning-layout-item>
+                            <lightning-layout-item flexibility="auto" padding="around-large">
+                            <lightning-input type="text"
+                                value={model}
+                                label="Model"
+                                onchange={handleModel}>
+                            </lightning-input>
+                        </lightning-layout-item>
+                            <lightning-layout-item flexibility="auto" padding="around-large">
+                            <lightning-input type="text"
+                                value={code}
+                                label="Code"
+                                onchange={handleCode}>
+                            </lightning-input>
+                        </lightning-layout-item>
+                            <lightning-layout-item flexibility="auto" padding="around-large">
+                            <lightning-input type="text"
+                                value={mark}
+                                label="Mark"
+                                onchange={handleMark}>
+                            </lightning-input>
+                        </lightning-layout-item>
+                </lightning-layout>
+                
+            </div>
+            
+            <div class="slds-align_absolute-center slds-m-bottom_small">
+                <lightning-button label="Search"
+                    onclick={handleSearchButton}
+                    variant="brand"
+                    class="slds-m-right_xxx-small">
+                </lightning-button>
+                <lightning-button label="Clear"
+                    onclick={handleClearButton}
+                    variant="neutral"
+                    class="slds-m-left_xxx-small">
+                </lightning-button>
+            </div>
+
+            <template if:true={isFounded}>
+                <lightning-datatable
+                    key-field="id"
+                    data={pageData}
+                    hide-checkbox-column
+                    columns={columns}>
+                </lightning-datatable>
+                <div class="slds-align_absolute-center slds-m-top_small">
+                    <lightning-button-group>
+                        <lightning-button label="first" onclick={handleFirst}></lightning-button>
+                        <lightning-button label="previous" onclick={handlePrevious}></lightning-button>
+                        <lightning-button label="next" onclick={handleNext}></lightning-button>
+                        <lightning-button label="last" onclick={handleLast}></lightning-button>
+                    </lightning-button-group>
+                </div>
+                <div class="slds-align_absolute-center">
+                    <lightning-combobox
+                        name="records per page"
+                        label="Records per page"
+                        value={pageRecords}
+                        options={paginationOptions}
+                        onchange={handlePageRecords} >
+                    </lightning-combobox>
+                </div>
+                <div class="slds-align_absolute-center">
+                    Current page {pageNumberForPrint}/{maxPages}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

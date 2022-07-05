@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>CS_SearchProductController</members>
 		<members>ManageProductImage</members>
 		<members>ManageProductImageTest</members>
 		<members>ManageProductProfileImage</members>
@@ -34,6 +35,7 @@
 		<members>imageGallery</members>
 		<members>previewFileModal</members>
 		<members>previewFileThumbnailCard</members>
+		<members>searchProduct</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<version>53.0</version>
