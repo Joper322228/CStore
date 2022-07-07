@@ -78,16 +78,16 @@
                 </lightning-datatable>
                 <div class="slds-align_absolute-center slds-m-top_small">
                     <lightning-button-group>
-                        <lightning-button label="first" onclick={handleFirst}></lightning-button>
-                        <lightning-button label="previous" onclick={handlePrevious}></lightning-button>
-                        <lightning-button label="next" onclick={handleNext}></lightning-button>
-                        <lightning-button label="last" onclick={handleLast}></lightning-button>
+                        <lightning-button label="First" onclick={handleFirst} disabled={isFirst}></lightning-button>
+                        <lightning-button label="Previous" onclick={handlePrevious} disabled={isFirst}></lightning-button>
+                        <lightning-button label="Next" onclick={handleNext} disabled={isLast}></lightning-button>
+                        <lightning-button label="Last" onclick={handleLast} disabled={isLast}></lightning-button>
                     </lightning-button-group>
                 </div>
                 <div class="slds-align_absolute-center">
                     <lightning-combobox
                         name="records per page"
-                        label="Records per page"
+                        label="Records Per Page"
                         value={pageRecords}
                         options={paginationOptions}
                         onchange={handlePageRecords} >

@@ -42,10 +42,27 @@ export default class SearchProduct extends LightningElement {
 
     get paginationOptions() {
         return [
-            { label: '5', value: 5 },
-            { label: '10', value: 10 },
+            { label: '5 records', value: 5 },
+            { label: '10 records', value: 10 },
         ];
     }
+
+    get isLast(){
+        if(this.pageNumber == (this.maxPages - 1)){
+            return true;
+        } else{
+            return false;
+        }
+    }
+    
+    get isFirst(){
+        if(this.pageNumber == 0){
+            return true;
+        } else{
+            return false;
+        }
+    }
+    
 
     connectedCallback() {
         this.pageRecords = this.paginationOptions[0].value;
@@ -72,7 +89,9 @@ export default class SearchProduct extends LightningElement {
     }
 
     handlePageRecords(event){
-        this.pageRecords = event.detail.value;
+        this.pageRecords = parseInt(event.detail.value);
+        this.pageNumber = 0;
+        this.pageNumberForPrint = 1;
         this.updatePage();
     }
 
@@ -121,23 +140,25 @@ export default class SearchProduct extends LightningElement {
         this.pageNumber = Math.max(0, this.pageNumber - 1);
         this.pageNumberForPrint = this.pageNumber + 1;
         this.updatePage();
-      }
+    }
 
     handleFirst() {
         this.pageNumber = 0;
         this.pageNumberForPrint = this.pageNumber + 1;
         this.updatePage();
-      }
+    }
 
     handleNext() {
         this.pageNumber = Math.min(Math.round((this.foundedProducts.length-(this.pageRecords - 1))/this.pageRecords), this.pageNumber + 1);
         this.pageNumberForPrint = this.pageNumber + 1;
         this.updatePage()
-      }
+    }
 
     handleLast() {
         this.pageNumber = Math.round((this.foundedProducts.length-(this.pageRecords - 1))/this.pageRecords);
         this.pageNumberForPrint = this.pageNumber + 1;
         this.updatePage();
-      }
+    }
+
+    
 }
