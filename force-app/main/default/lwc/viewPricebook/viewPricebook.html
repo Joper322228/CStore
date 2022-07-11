@@ -1,0 +1,43 @@
+<template>
+    <template if:true={openModal}>
+        <c-products-on-pricebook onclosemodal={handleCloseModal} pricebook-id={recordId}></c-products-on-pricebook>
+    </template>
+    <lightning-card>
+        <template if:true={pricebookEntries}>  
+            <div class='slds-m-around_medium'>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input label="Set currency" onchange={handleCurrency} type="number" formatter="currency" step="0.01"></lightning-input>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input label="Set percentage" onchange={handlePercentage} type="number" formatter="percent" step="0.01" max="1"> </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-m-vertical_x-small">
+                    <lightning-input 
+                        type="toggle" 
+                        unchecked message-toggle-active="Using percentage" 
+                        message-toggle-inactive="Using currency"
+                        onchange={handleToggle}>
+                    </lightning-input>
+                </div>
+                <div class="slds-m-vertical_x-small">
+                    <lightning-button-group>
+                        <lightning-button label="Update Price" onclick={handleUpdatePrice}></lightning-button>
+                        <lightning-button label="Add products" onclick={handleOpenModal}></lightning-button>
+                    </lightning-button-group>
+                </div>
+                    
+                    <lightning-datatable
+                        key-field='Id'
+                        data={pricebookEntries}
+                        columns={columns}>
+                    </lightning-datatable>  
+                
+            </div>
+        </template> 
+        <template if:false={pricebookEntries}>
+            <div class="slds-text-heading_small slds-align_absolute-center">Please select pricebook</div>
+        </template>
+    </lightning-card>
+</template>

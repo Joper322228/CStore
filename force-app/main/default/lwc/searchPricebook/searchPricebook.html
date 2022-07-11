@@ -1,0 +1,30 @@
+<template>
+    <template if:true={isOpenModal}>
+        <c-add-pricebook onclosemodal={handleCloseAddModal}></c-add-pricebook>
+    </template>
+    <lightning-card title='Pricebook' icon-name='custom:custom63'>  
+        <div class='slds-m-around_medium'>  
+            <lightning-input label='Pricebook name' onchange={handleName}></lightning-input>
+            <div class="slds-m-vertical_x-small slds-align_absolute-center">
+                <lightning-button label="Search"
+                    onclick={handleSearch}
+                    variant="brand"
+                    class="slds-m-right_xxx-small">
+                </lightning-button>
+                <lightning-button label="Add new pricebook"
+                    onclick={handleOpenAddModal}
+                    variant="brand"
+                    class="slds-m-right_xxx-small">
+                </lightning-button>
+            </div>
+            <template if:true={pricebooks}>      
+                <lightning-datatable
+                    key-field='Id'
+                    data={pricebooks}
+                    columns={columns}
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>  
+            </template>      
+        </div>  
+    </lightning-card>
+</template>
