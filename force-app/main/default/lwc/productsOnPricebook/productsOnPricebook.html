@@ -11,6 +11,12 @@
                 <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Products</h1>
             </div>
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-input label='Pricebook name' onchange={handleName}></lightning-input>
+                <lightning-button label="Search"
+                    onclick={handleSearch}
+                    variant="brand"
+                    class="slds-m-around_x-small slds-align_absolute-center">
+                </lightning-button>
                 <template if:true={products}>
                     <lightning-datatable
                         key-field='Id'

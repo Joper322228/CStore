@@ -12,7 +12,8 @@ import updatePricebookEntriesPercentage from '@salesforce/apex/CS_PricebookManag
 
 const columns = [
     { label: 'Product name', fieldName: 'Name' },
-    { label: 'Price', fieldName: 'Price' },
+    { label: 'Price', fieldName: 'Price', type: 'currency' },
+    { label: 'New price', fieldName: 'NewPrice', type: 'currency' },
 ];
 
 export default class ViewPricebook extends LightningElement {
@@ -23,6 +24,7 @@ export default class ViewPricebook extends LightningElement {
     currencyValue;
     usePercentage = false;
     openModal = false;
+    newPrice;
 
     @wire(MessageContext)
     messageContext;
@@ -49,7 +51,8 @@ export default class ViewPricebook extends LightningElement {
                 let pricebookEntry = {
                     Id: result[i].Id,
                     Name: result[i].Product2.Name,
-                    Price: result[i].UnitPrice
+                    Price: result[i].UnitPrice,
+                    NewPrice: result[i].UnitPrice,
                 }
                 this.pricebookEntries.push(pricebookEntry);
             }
@@ -65,10 +68,42 @@ export default class ViewPricebook extends LightningElement {
 
     handleCurrency(event){
         this.currencyValue = event.detail.value;
+        getPricebookEntries({recordId: this.recordId})
+        .then((result) => {
+            this.pricebookEntries = [];
+            for(let i = 0; i < result.length; i++){
+                let pricebookEntry = {
+                    Id: result[i].Id,
+                    Name: result[i].Product2.Name,
+                    Price: result[i].UnitPrice,
+                    NewPrice: result[i].UnitPrice + parseInt(this.currencyValue)
+                }
+                this.pricebookEntries.push(pricebookEntry);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
     handlePercentage(event){
         this.percentageValue = event.detail.value;
+        getPricebookEntries({recordId: this.recordId})
+        .then((result) => {
+            this.pricebookEntries = [];
+            for(let i = 0; i < result.length; i++){
+                let pricebookEntry = {
+                    Id: result[i].Id,
+                    Name: result[i].Product2.Name,
+                    Price: result[i].UnitPrice,
+                    NewPrice: result[i].UnitPrice + result[i].UnitPrice * (this.percentageValue / 100)
+                }
+                this.pricebookEntries.push(pricebookEntry);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
     handleToggle(event){
@@ -89,7 +124,8 @@ export default class ViewPricebook extends LightningElement {
                 let pricebookEntry = {
                     Id: result[i].Id,
                     Name: result[i].Product2.Name,
-                    Price: result[i].UnitPrice
+                    Price: result[i].UnitPrice,
+                    NewPrice: result[i].UnitPrice
                 }
                 this.pricebookEntries.push(pricebookEntry);
             }
@@ -106,14 +142,15 @@ export default class ViewPricebook extends LightningElement {
             Ids.push(chosenProducts[i].Id);
         }
         if(this.usePercentage){
-            updatePricebookEntriesPercentage({entryIds: Ids, valueForUpdate: this.percentageValue, recordId: this.recordId})
+            updatePricebookEntriesPercentage({entryIds: Ids, valueForUpdate: this.percentageValue / 100, recordId: this.recordId})
             .then((result) => {
                 this.pricebookEntries = [];
                 for(let i = 0; i < result.length; i++){
                     let pricebookEntry = {
                         Id: result[i].Id,
                         Name: result[i].Product2.Name,
-                        Price: result[i].UnitPrice
+                        Price: result[i].UnitPrice,
+                        NewPrice: result[i].UnitPrice + result[i].UnitPrice * (this.percentageValue / 100)
                     }
                     this.pricebookEntries.push(pricebookEntry);
                 }
@@ -129,7 +166,8 @@ export default class ViewPricebook extends LightningElement {
                     let pricebookEntry = {
                         Id: result[i].Id,
                         Name: result[i].Product2.Name,
-                        Price: result[i].UnitPrice
+                        Price: result[i].UnitPrice,
+                        NewPrice: result[i].UnitPrice + parseInt(this.currencyValue)
                     }
                     this.pricebookEntries.push(pricebookEntry);
                 }

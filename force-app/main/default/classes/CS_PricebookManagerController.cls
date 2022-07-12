@@ -27,7 +27,6 @@ public with sharing class CS_PricebookManagerController {
     public static List<PricebookEntry> updatePricebookEntriesCurrency(List<String> entryIds, Double valueForUpdate, String recordId){
         List<PricebookEntry> pricebookEntries = new List<PricebookEntry>();
 
-
         for(PricebookEntry pricebookEntry : [SELECT Id, UnitPrice, Pricebook2Id, Product2.Name FROM PricebookEntry WHERE Id IN: entryIds]){
             pricebookEntry.UnitPrice += valueForUpdate;
             pricebookEntries.add(pricebookEntry);
@@ -42,7 +41,6 @@ public with sharing class CS_PricebookManagerController {
     public static List<PricebookEntry> updatePricebookEntriesPercentage(List<String> entryIds, Double valueForUpdate, String recordId){
         List<PricebookEntry> pricebookEntries = new List<PricebookEntry>();
 
-
         for(PricebookEntry pricebookEntry : [SELECT Id, UnitPrice, Pricebook2Id, Product2.Name FROM PricebookEntry WHERE Id IN: entryIds]){
             pricebookEntry.UnitPrice += (valueForUpdate * pricebookEntry.UnitPrice);
             pricebookEntries.add(pricebookEntry);
@@ -54,19 +52,26 @@ public with sharing class CS_PricebookManagerController {
     }
 
     @AuraEnabled
-    public static List<Product2> getProducts(){
-        return [SELECT Id, Name, Family FROM Product2];
+    public static List<Product2> getProducts(String productName){
+        List<Product2> products = new List<Product2>();
+        String query = 'SELECT Id, Name, Family FROM Product2 WHERE Id != null';
+
+        if(!String.isBlank(productName)){
+            query += ' AND Name Like  \'%' + productName + '%\'';
+        }
+
+        products = Database.query(query);
+
+        return products;
     }
 
     @AuraEnabled
     public static List<PricebookEntry> addProductsToPricebook(List<String> productIds, String pricebookId){
-        System.debug(productIds);
-        System.debug(pricebookId);
         List<PricebookEntry> pricebookEntries = new List<PricebookEntry>();
 
         List<Pricebook2> standartPricebook = [SELECT Id FROM Pricebook2 WHERE IsStandard = true];
         List<PricebookEntry> standartPricebookEntries = [SELECT Product2Id, UnitPrice FROM PricebookEntry WHERE Pricebook2Id =: standartPricebook[0].Id];
-        System.debug(standartPricebookEntries);
+
         for(String id : productIds){
             PricebookEntry pricebookEntry = new PricebookEntry();
             pricebookEntry.Product2Id = id;

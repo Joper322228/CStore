@@ -11,16 +11,29 @@ export default class ProductsOnPricebook extends LightningElement {
     @api pricebookId;
     columns = columns;
     products;
-    isModalOpen
+    isModalOpen;
+    name;
 
     connectedCallback(){
-        getProducts({})
+        getProducts({ productName: this.name})
         .then((result) => {
             this.products = result;
-            console.log(this.products);
-            console.log(result);
         })
         .catch((error) => {
+            console.log(error);
+        })
+    }
+
+    handleName(event) {
+        this.name = event.detail.value;
+    }
+
+    handleSearch(){
+        getProducts({ productName: this.name })
+        .then((result) => {
+            this.products = result;
+        })
+        .catch(() => {
             console.log(error);
         })
     }
