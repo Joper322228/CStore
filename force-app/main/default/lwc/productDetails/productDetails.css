@@ -67,7 +67,7 @@ body
   padding: 10px;
 }
 .product_model{
-  padding: 10px;
+  padding-left: 10px;
   color: #878686;
   font-size: .8rem;
   
@@ -79,7 +79,7 @@ body
 }
 .product_descr{
   color: #615F5F;
-  padding: 10px;
+  padding-left: 10px;
 }
 .product_color{
   color: #878686;
@@ -141,4 +141,3 @@ padding: 10px;}
 .slider_container{
   margin-top: 20%;
 }
-
