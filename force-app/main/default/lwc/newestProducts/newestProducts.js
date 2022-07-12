@@ -12,7 +12,9 @@ export default class NewestProducts extends LightningElement {
         getNewestProducts({})
         .then((result) =>{
             this.newestProducts = result;
+            //let arrayForRemove = [...this.newestProducts];
             this.currentProduct = this.newestProducts[0];
+            //this.newestProducts = arrayForRemove;
             this.detailsUrlBuilder();
         })
         .catch((error) =>{

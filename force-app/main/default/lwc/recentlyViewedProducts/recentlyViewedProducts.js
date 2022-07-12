@@ -5,15 +5,17 @@ import getRecentlyViewedProducts from '@salesforce/apex/CS_SearchProductControll
 export default class RecentlyViewedProducts extends LightningElement {
 
     recentlyViewed;
-    currentProduct;
-    currentProductNumber = 0;
+    currentProduct = [];
+    currentProductNumber = 1;
+    renderProducts = false;
 
     connectedCallback(){
         getRecentlyViewedProducts({})
         .then((result) =>{
             this.recentlyViewed = result;
-            this.currentProduct = this.recentlyViewed[0];
-            console.log(this.recentlyViewed);
+            this.currentProduct.push(this.recentlyViewed[0]);
+            this.currentProduct.push(this.recentlyViewed[1]);
+            this.renderProducts = true;
         })
         .catch((error) =>{
             this.dispatchEvent(new ShowToastEvent({
@@ -28,13 +30,17 @@ export default class RecentlyViewedProducts extends LightningElement {
         if(this.currentProductNumber != (this.recentlyViewed.length - 1)){
             this.currentProductNumber += 1;
         }
-        this.currentProduct = this.recentlyViewed[this.currentProductNumber];
+        this.currentProduct = [];
+        this.currentProduct.push(this.recentlyViewed[this.currentProductNumber - 1]);
+        this.currentProduct.push(this.recentlyViewed[this.currentProductNumber]);
     }
 
     handlePrev(){
-        if(this.currentProductNumber != 0){
+        if(this.currentProductNumber != 1){
             this.currentProductNumber -= 1;
         }
-        this.currentProduct = this.recentlyViewed[this.currentProductNumber];
+        this.currentProduct = [];
+        this.currentProduct.push(this.recentlyViewed[this.currentProductNumber - 1]);
+        this.currentProduct.push(this.recentlyViewed[this.currentProductNumber]);
     }
 }
