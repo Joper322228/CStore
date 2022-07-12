@@ -1,0 +1,12 @@
+.submit{
+    width: 100px;
+    padding: 12px 0;
+    background-color: #000000d7;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+  }
+  .submit:hover{
+    background-color: #202020d8;
+    
+  }

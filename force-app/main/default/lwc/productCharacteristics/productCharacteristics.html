@@ -1,0 +1,12 @@
+<template>
+    <template if:true={displayUrl}>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12">
+                <img src={displayUrl}/>
+            </div>
+            <div class="slds-col slds-size_5-of-12">
+                <div class="slds-text-heading_small">{recordDetails}</div>
+            </div>
+        </div>
+    </template>
+</template>

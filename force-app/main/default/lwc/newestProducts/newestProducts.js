@@ -6,13 +6,14 @@ export default class NewestProducts extends LightningElement {
     newestProducts;
     currentProduct;
     currentProductNumber = 0;
-
+    currentProductDetailsUrl;
 
     connectedCallback(){
         getNewestProducts({})
         .then((result) =>{
             this.newestProducts = result;
             this.currentProduct = this.newestProducts[0];
+            this.detailsUrlBuilder();
         })
         .catch((error) =>{
             this.dispatchEvent(new ShowToastEvent({
@@ -28,6 +29,7 @@ export default class NewestProducts extends LightningElement {
             this.currentProductNumber += 1;
         }
         this.currentProduct = this.newestProducts[this.currentProductNumber];
+        this.detailsUrlBuilder();
     }
 
     handlePrev(){
@@ -35,5 +37,12 @@ export default class NewestProducts extends LightningElement {
             this.currentProductNumber -= 1;
         }
         this.currentProduct = this.newestProducts[this.currentProductNumber];
+        this.detailsUrlBuilder();
+    }
+
+    detailsUrlBuilder(){
+        this.currentProductDetailsUrl = 
+            'https://computerstore-developer-edition.eu44.force.com/s/product/Product2/' +
+            this.currentProduct.Id;
     }
 }
