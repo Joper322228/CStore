@@ -8,6 +8,7 @@ import FAMILY_FIELD from '@salesforce/schema/Product2.Family';
 import AMOUNT_FIELD from '@salesforce/schema/Product2.Amount__c';
 import MODEL_FIELD from '@salesforce/schema/Product2.Model__c';
 import CODE_FIELD from '@salesforce/schema/Product2.ProductCode';
+import DESCRIPTION_FIELD from '@salesforce/schema/Product2.Description';
 import updateStandartPricebook from '@salesforce/apex/PricebookEntryManagerForProduct.updateStandartPricebook';
 import getStandartPrice from '@salesforce/apex/PricebookEntryManagerForProduct.getStandartPrice';
 import getVersionFiles from '@salesforce/apex/uploadProductImages.getVersionFiles';
@@ -24,6 +25,7 @@ export default class EditProduct extends LightningElement {
     amountField = AMOUNT_FIELD;
     modelField = MODEL_FIELD;
     codeField = CODE_FIELD;
+    descriptionField = DESCRIPTION_FIELD;
     standartPrice = undefined;
     idForProfileImage;
     loaded = false;

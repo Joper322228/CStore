@@ -13,7 +13,7 @@ export default class CommentAddForm extends LightningElement {
     boatReviewObject;
     nameField;
     commentField;
-    labelSubject = 'Review Subject';
+    labelSubject = 'Review Product';
     labelRating  = 'Rating';
     
     // // Public Getter and Setter to allow for logic to run on recordId change

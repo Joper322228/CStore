@@ -15,9 +15,7 @@ export default class ProductDetails extends LightningElement {
     @wire (getProductImages, {recordId : '$recordId'})
     getImages({error, data}){
         if(data){
-            console.log(data);
             this.recordImages = data;
-            console.log(this.recordImages);
             for(let i = 0; i < data.length; i++){
                 let url = "/sfc/servlet.shepherd/document/download/" +
                     data[i].ContentDocumentId;
@@ -26,13 +24,6 @@ export default class ProductDetails extends LightningElement {
             this.currentImgUrl = this.imagesUrl[0];
         }
     };
-
-    handleButton(){
-        console.log(this.recordId);
-        console.log(this.recordDetails);
-        console.log(this.recordImages);
-        console.log(JSON.parse(JSON.stringify(this.imagesUrl)));
-    }
 
     handleNext(){
         if(this.currentImgNumber != (this.imagesUrl.length - 1)){
