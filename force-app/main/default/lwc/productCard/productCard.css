@@ -32,6 +32,11 @@
   text-align: center;
 }
 
+.img-wrapper img
+{
+  height: 200px;
+}
+
 .info
 {
   width: 100%;
