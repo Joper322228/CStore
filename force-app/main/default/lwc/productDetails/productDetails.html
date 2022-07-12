@@ -2,7 +2,7 @@
     <template if:true={recordDetails.data}>
     <div class="body">
         <div class="product_img">
-            <div class="slds-grid">
+            <!-- <div class="slds-grid">
                 <div class="slds-col">
                     <div class="slds-align_absolute-center">
                         <a class="prev" onclick={handlePrev}>&#10094;</a>
@@ -18,6 +18,20 @@
                         <a class="next" onclick={handleNext}>&#10095;</a>
                     </div>
                 </div>
+            </div> -->
+            <div class="container">
+                    <div class="slider_container">
+                        <a class="prev" onclick={handlePrev}>&#10094;</a>
+                    </div>
+
+                    <div class="">
+                        <img src={currentImgUrl} alt={recordDetails.data.Name}/>
+                    </div>
+
+
+                    <div class="slider_container">
+                        <a class="next" onclick={handleNext}>&#10095;</a>
+                    </div>
             </div>
         </div>
         <div class="product_info">

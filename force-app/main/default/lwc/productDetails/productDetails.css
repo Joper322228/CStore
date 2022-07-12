@@ -52,8 +52,7 @@ body
 }
 
 .product_img img{
-  width: 100%;
-  margin-top: 10%;
+  height: 300px;
 }
 
 
@@ -131,3 +130,15 @@ padding: 10px;}
     text-align: center;
    }
 }
+
+.container{
+  height: 300px;
+  display: flex;
+  min-width: 100%;
+  justify-content: space-between;
+}
+
+.slider_container{
+  margin-top: 20%;
+}
+
