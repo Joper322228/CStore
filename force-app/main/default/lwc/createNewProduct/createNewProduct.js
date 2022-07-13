@@ -8,6 +8,7 @@ import FAMILY_FIELD from '@salesforce/schema/Product2.Family';
 import AMOUNT_FIELD from '@salesforce/schema/Product2.Amount__c';
 import MODEL_FIELD from '@salesforce/schema/Product2.Model__c';
 import CODE_FIELD from '@salesforce/schema/Product2.ProductCode';
+import DESCRIPTION_FIELD from '@salesforce/schema/Product2.Description';
 import setStandartPrice from '@salesforce/apex/PricebookEntryManagerForProduct.setStandartPricebook';
 import getVersionFiles from '@salesforce/apex/uploadProductImages.getVersionFiles';
 
@@ -25,6 +26,7 @@ export default class CreateNewProduct extends LightningElement {
     amountField = AMOUNT_FIELD;
     modelField = MODEL_FIELD;
     codeField = CODE_FIELD;
+    description = DESCRIPTION_FIELD;
     standartPrice = undefined;
     nameForPrint;
     isAddedPricebook = false;

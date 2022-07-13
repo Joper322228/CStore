@@ -10,7 +10,8 @@ public with sharing class CS_ProductDetailsController {
             ProductCode, 
             Model__c, 
             DisplayUrl, 
-            Amount__c 
+            Amount__c ,
+            Description
             FROM Product2 
             WHERE ID =: recordId 
             LIMIT 1
