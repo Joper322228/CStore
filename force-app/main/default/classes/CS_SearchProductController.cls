@@ -31,7 +31,7 @@ public with sharing class CS_SearchProductController {
 
     @AuraEnabled(cacheable=true)
     public static List<Product2> getRecentlyViewedProducts(){
-        List<RecentlyViewed> recentlyViewedProductsId = [SELECT Id FROM RecentlyViewed WHERE Type = 'Product2' AND LastViewedDate = LAST_N_DAYS:7 ORDER BY LastViewedDate DESC LIMIT 5];
+        List<RecentlyViewed> recentlyViewedProductsId = [SELECT Id FROM RecentlyViewed WHERE Type = 'Product2' AND LastViewedDate = LAST_N_DAYS:7 ORDER BY LastViewedDate DESC LIMIT 6];
 
         Set<Id> productsId = new Set<Id>();
         for(RecentlyViewed recv : recentlyViewedProductsId) {
@@ -45,7 +45,7 @@ public with sharing class CS_SearchProductController {
     public static List<Product2> getNewestProducts(){
         List<Product2> newestProducts = new List<Product2>();
 
-        newestProducts = [SELECT Id, Name, DisplayUrl, Family, ProductCode, Mark__c, Model__c, Amount__c FROM Product2 ORDER BY CreatedDate DESC LIMIT 5];
+        newestProducts = [SELECT Id, Name, DisplayUrl, Family, ProductCode, Mark__c, Model__c, Amount__c FROM Product2 ORDER BY CreatedDate DESC LIMIT 6];
 
         return newestProducts;
     }

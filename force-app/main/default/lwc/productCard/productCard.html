@@ -1,21 +1,33 @@
 <template>
     <template if:true={product}>
-    <ul class="listing">
-        <li class="product">
-            <a class="img-wrapper" href="#">
-                <img src={product.DisplayUrl} alt={product.Name} />
-            </a>
-        
-            <div class="info">
-                <div class="title">{product.Name}</div>
-            </div>
+        <!-- <ul class="listing">
+            <li class="product">
+                <a class="img-wrapper" href="#">
+                    <img src={product.DisplayUrl} alt={product.Name} />
+                </a>
             
-            <div class="actions-wrapper">
-                <a href={detailsUrl} onclick={handleClick} class="add-btn wishlist">Details</a>
-                <a href="#" class="add-btn cart">Cart</a>
-            </div>
-        </li>
-    </ul>
-</template>
+                <div class="info">
+                    <div class="title">{product.Name}</div>
+                </div>
+                
+                <div class="actions-wrapper">
+                    <a href={detailsUrl} onclick={handleClick} class="add-btn wishlist">Details</a>
+                    <a href="#" class="add-btn cart">Cart</a>
+                </div>
+            </li>
+        </ul> -->
+        <ul class="card-list">
+	
+            <li class="card">
+                <a class="card-image" href={detailsUrl} style="background-image: url({detailsUrl});" data-image-full={detailsUrl}>
+                    <img src={product.DisplayUrl} alt={product.Name} />
+                </a>
+                <a class="card-description" href={detailsUrl} >
+                    <h2>{product.Name}</h2>
+                    <p>Add to cart</p>
+                </a>
+            </li>
+        </ul>
+    </template>
  
 </template>
