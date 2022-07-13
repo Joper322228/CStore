@@ -16,8 +16,6 @@
 		<name>ApexPage</name>
 	</types>
 	<types>
-		<members>CreateNewProductWrapper</members>
-		<members>EditProductWrapper</members>
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
