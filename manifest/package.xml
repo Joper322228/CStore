@@ -30,7 +30,6 @@
 		<name>CustomObject</name>
 	</types>
 	<types>
-		<members>commentAddForm</members>
 		<members>createNewProduct</members>
 		<members>editProduct</members>
 		<members>imageGallery</members>
