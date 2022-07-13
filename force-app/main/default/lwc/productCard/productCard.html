@@ -1,0 +1,21 @@
+<template>
+    <template if:true={product}>
+    <ul class="listing">
+        <li class="product">
+            <a class="img-wrapper" href="#">
+                <img src={product.DisplayUrl} alt={product.Name} />
+            </a>
+        
+            <div class="info">
+                <div class="title">{product.Name}</div>
+            </div>
+            
+            <div class="actions-wrapper">
+                <a href={detailsUrl} onclick={handleClick} class="add-btn wishlist">Details</a>
+                <a href="#" class="add-btn cart">Cart</a>
+            </div>
+        </li>
+    </ul>
+</template>
+ 
+</template>

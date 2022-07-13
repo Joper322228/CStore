@@ -1,0 +1,35 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Products</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-input label='Pricebook name' onchange={handleName}></lightning-input>
+                <lightning-button label="Search"
+                    onclick={handleSearch}
+                    variant="brand"
+                    class="slds-m-around_x-small slds-align_absolute-center">
+                </lightning-button>
+                <template if:true={products}>
+                    <lightning-datatable
+                        key-field='Id'
+                        data={products}
+                        columns={columns}>
+                    </lightning-datatable>
+                </template>
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={handleCloseModal} aria-label="Cancel and close">Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={handleSaveProducts}>Save</button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

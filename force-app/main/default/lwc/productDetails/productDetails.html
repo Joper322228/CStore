@@ -1,0 +1,83 @@
+<template>
+    <template if:true={recordDetails.data}>
+    <!-- <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <div class="slds-align_absolute-center">
+                        <a class="prev" onclick={handlePrev}>&#10094;</a>
+                    </div>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-align_absolute-center">
+                        <img src={currentImgUrl}/>
+                    </div>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-align_absolute-center">
+                        <a class="next" onclick={handleNext}>&#10095;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            
+                <h1>{recordDetails.data.Name}</h1><br/>
+                Mark: {recordDetails.data.Mark__c}<br/>
+                Family: {recordDetails.data.Family}<br/>
+                Model: {recordDetails.data.Model__c}<br/>
+                Products left: {recordDetails.data.Amount__c}<br/>
+                <lightning-button onclick={handleButton}></lightning-button>
+            
+        </div>
+    </div> -->
+    <div class="body">
+        <div class="product_img">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <div class="slds-align_absolute-center">
+                        <a class="prev" onclick={handlePrev}>&#10094;</a>
+                    </div>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-align_absolute-center">
+                        <img src={currentImgUrl} alt={recordDetails.data.Name}/>
+                    </div>
+                </div>
+                <div class="slds-col">
+                    <div class="slds-align_absolute-center">
+                        <a class="next" onclick={handleNext}>&#10095;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product_info">
+            <div class="seller_info"> </div>
+            <div class="product_title">{recordDetails.data.Name}</div>
+            <div class="product_model">CODE: {recordDetails.data.ProductCode}
+            </div>
+                <div class="product_price">$230.00
+            </div>
+            <div class="product_descr">Family: {recordDetails.data.Famiy}</div>
+            <div class="product_descr">Model: {recordDetails.data.Model__c}</div>
+            <div class="product_descr">{recordDetails.data.Description}</div>
+            <div class="product_descr">Products left: {recordDetails.data.Amount__c}</div>
+            <div class="product_quantity">Quantity:<br> 
+                <input type="number">
+            </div>
+                <div class="add_to_cart">Add to cart</div>
+            </div>
+        </div>
+        <lightning-tabset active-tab-value={activeTab}>
+            <div class="slds-m-around_x-small">
+               <lightning-tab label="Comments"  value="1" onactive={handleActive}>
+                   Show comment section               
+               </lightning-tab>
+              
+               <lightning-tab label="Add comments"  value="2" onactive={handleActive}>
+                   <c-comment-add-form></c-comment-add-form>
+               </lightning-tab>
+           </div>
+       </lightning-tabset>
+    </template>
+</template>
