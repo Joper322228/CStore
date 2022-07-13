@@ -25,14 +25,6 @@
 		<name>CustomObject</name>
 	</types>
 	<types>
-		<members>createNewProduct</members>
-		<members>editProduct</members>
-		<members>imageGallery</members>
-		<members>newestProducts</members>
-		<members>previewFileModal</members>
-		<members>previewFileThumbnailCard</members>
-		<members>productCard</members>
-		<members>searchProduct</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>
