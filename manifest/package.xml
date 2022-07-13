@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>CS_SearchProductController</members>
-		<members>ManageProductImage</members>
-		<members>ManageProductImageTest</members>
-		<members>ManageProductProfileImage</members>
-		<members>ManageProductProfileImageTest</members>
 		<members>PricebookEntryManagerForProduct</members>
 		<members>PricebookEntryManagerForProductTest</members>
 		<members>WebToLeadControllerPageController</members>
