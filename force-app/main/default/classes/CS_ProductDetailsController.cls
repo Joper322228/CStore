@@ -37,4 +37,22 @@ public with sharing class CS_ProductDetailsController {
             ORDER BY CreatedDate DESC
 		]; 
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<AggregateResult> getRatingProduct(String recordId){
+        return [SELECT AVG(Rating__c) FROM Product_Comment__c WHERE Product__c =: recordId];
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<AggregateResult> getProductPrice(String recordId){
+        List<AggregateResult> price = [SELECT MIN(UnitPrice) FROM PricebookEntry WHERE Product2Id =: recordId AND Pricebook2.IsActive = true];
+        List<AggregateResult> standartPrice = [SELECT MIN(UnitPrice) FROM PricebookEntry WHERE Product2Id =: recordId AND Pricebook2.IsStandard = true];
+
+        price.add(standartPrice[0]);
+
+        System.debug(price);
+
+
+        return price;
+    }
 }
