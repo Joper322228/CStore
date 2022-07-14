@@ -37,7 +37,8 @@
         <div class="product_info">
             <div class="seller_info"> </div>
             <div class="product_title">{recordDetails.data.Name}</div>
-            <div class="product_price">$230.00</div>
+            <div class="product_price">€{priceValue}</div>
+            <div class="product_price"><c-five-star-rating value={ratingValue} read-only="true"></c-five-star-rating></div>
             <div class="product_model">CODE: {recordDetails.data.ProductCode}</div>
             <div class="product_descr">Family: {recordDetails.data.Family}</div>
             <div class="product_descr">Model: {recordDetails.data.Model__c}</div>
@@ -50,15 +51,15 @@
         <lightning-tabset active-tab-value={activeTab}>
             <div class="slds-m-around_x-small">
                <lightning-tab label="Comments"  value="1" onactive={handleActive}>
-                   Show comment section               
+                   <c-comment-review product-id={recordId}></c-comment-review>              
                </lightning-tab>
               
                <lightning-tab label="Add comments"  value="2" onactive={handleActive}>
-                   <c-comment-add-form></c-comment-add-form>
+                   <c-comment-add-form product-id={recordId} oncreatereview={handleReview}></c-comment-add-form>
                </lightning-tab>
 
                <lightning-tab label="Characteristics"  value="3" onactive={handleActive}>
-                    <c-product-characteristics display-url={recordDetails.data.DisplayUrl} record-details={recordDetails.data.Description}></c-product-characteristics>
+                    <c-product-characteristics display-url={recordDetails.data.DisplayUrl} record-details={recordDetails.data.Description} ></c-product-characteristics>
                 </lightning-tab>
            </div>
        </lightning-tabset>
