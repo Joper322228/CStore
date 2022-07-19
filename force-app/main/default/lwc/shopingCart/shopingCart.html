@@ -1,0 +1,38 @@
+<template>
+    <template if:true={isEmpty}>
+        You have no product in cart
+    </template>
+    <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+    </template>
+    <template if:true={isDisplay}>
+    <div class="basket">
+        <div class="basket-labels">
+          <ul>
+            <li class="item item-heading">Item</li>
+            <li class="price">Price</li>
+            <li class="quantity">Quantity</li>
+            <li class="subtotal">Subtotal</li>
+          </ul>
+        </div>
+        <template for:each={productCart} for:item="product">
+            <c-shoping-cart-item key={product.Id} product-item={product} ondelete={handleDelete} onupdatedquantity={updateTotal}></c-shoping-cart-item>
+        </template>
+      </div>
+      
+      <aside>
+        <div class="summary">
+          <div class="summary-total-items"><span class="total-items"></span>Summary</div>
+          <div class="summary-total">
+            <div class="total-title">Total</div>
+            <div class="total-value final-value" id="basket-total">{total}</div>
+          </div>
+          <div class="summary-checkout">
+            <div class="delete_button" onclick={handleRemove}>Go to Checkout</div>
+          </div>
+        </div>
+      </aside>
+      <div class="clear"></div>
+    </template>
+</template>

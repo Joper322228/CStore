@@ -1,4 +1,5 @@
 import { LightningElement, wire, api} from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getProducts from '@salesforce/apex/CS_PricebookManagerController.getProducts';
 import addProductsToPricebook from '@salesforce/apex/CS_PricebookManagerController.addProductsToPricebook';
 
@@ -59,7 +60,12 @@ export default class ProductsOnPricebook extends LightningElement {
             this.handleCloseModal(event);
         })
         .catch((error) => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                title: "This product is already in pricebook",
+                variant: "error"
+                })
+            );
         })
     }
 }

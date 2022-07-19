@@ -1,54 +1,137 @@
 <template>
-    <template if:false={productReviews}>
+    <template if:false={isDisplay}>
         <div class="slds-align_absolute-center slds-scrollable_y">No reviews available</div>
     </template>
     <!-- div for when there are reviews available -->
-    <template if:true={productReviews}>
-        <div class="slds-feed reviews-style slds-is-relative slds-scrollable_y" style="height: 500px">
-            <!-- insert spinner -->
+    <template if:true={isDisplay}>
+        <div class="slds-feed reviews-style slds-is-relative slds-scrollable_y container" style="height: 500px;">
             <template if:true={isLoading}>
                 <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
             </template>
             <ul class="slds-feed__list">
-                <!-- start iteration -->
                 <template for:each={productReviews} for:item="productReview">
                     <li class="slds-feed__item" key={productReview.Id}>
                         <article class="slds-post">
                             <header class="slds-post__header slds-media">
                                 <div class="slds-media__figure">
-                                    <!-- display the creator’s picture -->
                                     <lightning-avatar variant="circle" src={productReview.CreatedBy.SmallPhotoUrl}></lightning-avatar>
                                 </div>
                                 <div class="slds-media__body">
                                     <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
                                         <p>
-                                            <!-- display creator’s name -->
                                             <a  title={productReview.CreatedBy.Name} data-record-id={productReview.CreatedBy.Id}>
                                                 {productReview.CreatedBy.Name}
                                             </a>
                                         </p>
                                     </div>
                                     <p class="slds-text-body_small">
-                                        <!-- display created  date -->
                                         <lightning-formatted-date-time value={productReview.LastModifiedDate}></lightning-formatted-date-time>
                                     </p>
                                 </div>
+                                <div if:true={productReview.isOwner}>
+                                    <lightning-button-icon 
+                                        icon-name="utility:delete" 
+                                        data-id={productReview.Id} 
+                                        label="Del" 
+                                        variant="base" 
+                                        onclick={handleOpenDeleteModal}
+                                        class="slds-m-right_x-small">
+                                    </lightning-button-icon>
+                                    <lightning-button-icon 
+                                        icon-name="utility:edit" 
+                                        name={productReview.Rating__c} 
+                                        data-id={productReview.Id} 
+                                        label="Edit" 
+                                        variant="base" 
+                                        onclick={handleOpenEditModal}>
+                                    </lightning-button-icon>
+                                </div>  
                             </header>
                             <div class="slds-text-longform">
                                 <p class="slds-text-title_caps">
-                                    <!-- display Name -->
                                     {productReview.Name}
                                 </p>
-                                <!-- display Comment__c -->
-                                <lightning-formatted-rich-text value={productReview.Comment_Text__c}></lightning-formatted-rich-text>                                
+                                <lightning-formatted-rich-text value={productReview.Comment_Text__c}></lightning-formatted-rich-text>                              
                             </div>
-                        <!-- display five star rating on readonly mode -->
                         <c-five-star-rating value={productReview.Rating__c} read-only="true"></c-five-star-rating>
                     </article>
                 </li>
             </template>
-            <!-- end iteration -->
         </ul>
     </div>
     </template>
+
+    <template if:true={openDeleteModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel and close</span>
+              </button>
+              <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Delete Comment</h1>
+              </div>
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-text-align_center"><p>Are you sure you want delete your comment</p></div>
+              </div>
+              <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={handleCloseDeleteModal}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={handleDelete}>Delete</button>
+              </div>
+            </div>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <template if:true={openEditModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <lightning-record-edit-form object-api-name="Product_Comment__c" record-id={commentIdForEdit} onsuccess={handleEdit} onsubmit={handleSubmit} onerror={handleError} style="height: 100%;">
+            <div class="slds-modal__container">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel and close</span>
+              </button>
+              <div class="slds-modal__header">
+                <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Edit Comment</h1>
+              </div>
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                <div class="slds-text-align_center">
+                    
+                        <lightning-layout multiple-rows vertical-align="start">
+                            <lightning-layout-item size="6" padding="horizontal-small">
+                                <div class="slds-form-element">                    
+                                    <label for={nameField} class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Review Subject</label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-input-field variant="label-hidden" field-name={nameField} required></lightning-input-field>
+                                    </div>                    
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="4" padding="horizontal-small">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label" for="record-name">Rating</label>
+                                    <div class="slds-form-element__control">
+                                        <c-five-star-rating value={ratingForEdit} onratingchange={handleRatingChanged}></c-five-star-rating>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item  padding="horizontal-small">
+                                <lightning-input-field field-name={commentField} required variant="label-hidden"></lightning-input-field>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                </div>
+              </div>
+              <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={handleCloseEditModal}>Cancel</button>
+                <button class="slds-button slds-button_brand" type="submit">Edit</button>
+              </div>
+            </div>
+            </lightning-record-edit-form>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
 </template>

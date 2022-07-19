@@ -1,30 +1,26 @@
 <template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
     <template if:true={product}>
-        <!-- <ul class="listing">
-            <li class="product">
-                <a class="img-wrapper" href="#">
-                    <img src={product.DisplayUrl} alt={product.Name} />
-                </a>
-            
-                <div class="info">
-                    <div class="title">{product.Name}</div>
-                </div>
-                
-                <div class="actions-wrapper">
-                    <a href={detailsUrl} onclick={handleClick} class="add-btn wishlist">Details</a>
-                    <a href="#" class="add-btn cart">Cart</a>
-                </div>
-            </li>
-        </ul> -->
         <ul class="card-list">
-	
             <li class="card">
                 <a class="card-image" href={detailsUrl} style="background-image: url({detailsUrl});" data-image-full={detailsUrl}>
                     <img src={product.DisplayUrl} alt={product.Name} />
                 </a>
-                <a class="card-description" href={detailsUrl} >
+                <a class="card-description" >
+                    <template if:true={isDiscount}>
+                        <div style="text-align: center;">
+                            <div class="title" style="margin-right: 3px"><h2 style=" font-size: 13px"><del>€{standartValue}</del></h2></div>
+                            <div class="title"><h1 style="color: rgb(179, 15, 15); font-size: 19px; font-weight: 600">€{priceValue}</h1></div>
+                        </div>
+                    </template> 
+                    <template if:false={isDiscount}>
+                        <h1 style="font-size: 19px; font-weight: 600">€{standartValue}</h1>
+                    </template>
                     <h2>{product.Name}</h2>
-                    <p>Add to cart</p>
+                    <div class="add_to_cart" onclick={handleAddToCard}>Add to cart</div>
                 </a>
             </li>
         </ul>

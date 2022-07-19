@@ -1,0 +1,24 @@
+<template>
+    <template if:true={productItem}>
+        <div class="basket-product">
+            <div class="item">
+                <div class="product-image">
+                    <img src={productItem.DisplayUrl} alt="Display image" class="product-frame">
+                </div>
+                <div class="product-details">
+                    <h1><strong>{productItem.Name}</strong></h1>
+                    <p>Product Code - {productItem.Code}</p>
+                </div>
+            </div>
+            <div class="price"><h2>€{productItem.Price}</h2></div>
+            <div class="quantity product_quantity">
+                <input type="number" value={productAmount} min="1" class="quantity-field" onchange={handleQuantity}>
+            </div>
+            <div class="subtotal"><h2>€{subTotal}</h2></div>
+            <div class="remove">
+                <div class="delete_button" onclick={handleRemove}>Remove</div>
+            </div>
+        </div>
+    </template>
+    
+</template>
