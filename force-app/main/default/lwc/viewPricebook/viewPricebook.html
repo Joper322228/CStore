@@ -7,17 +7,24 @@
             <div class='slds-m-around_medium'>
                 <div class="slds-grid slds-gutters">
                     <div class="slds-col slds-size_1-of-3">
-                        <lightning-input if:false={usePercentage} label="Set currency" onchange={handleCurrency} type="number" formatter="currency" step="0.01"></lightning-input>
-                        <div><lightning-slider if:true={usePercentage} onchange={handlePercentage} value={percentageValue} label="Percent" size="medium"></lightning-slider></div>
+                        <lightning-input if:true={useValue} label="Set value" onchange={handleCurrency} type="number" formatter="currency" step="0.01"></lightning-input>
+                        <lightning-input if:true={useNew} label="Set new price" onchange={handleNew} type="number" formatter="currency" step="0.01"></lightning-input>
+                        <lightning-slider if:true={usePercentage} onchange={handlePercentage} value={percentageValue} label="Percent" size="medium"></lightning-slider>
                     </div>
                 </div>
-                <div class="slds-m-vertical_x-small">
-                    <lightning-input 
-                        type="toggle" 
-                        unchecked message-toggle-active="Using percentage" 
-                        message-toggle-inactive="Using currency"
-                        onchange={handleToggle}>
-                    </lightning-input>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="slds-m-vertical_x-small">
+                            <lightning-combobox
+                                name="progress"
+                                label="Type of update"
+                                value={picklistValue}
+                                placeholder="Select type of input"
+                                options={options}
+                                onchange={handlePicklist} >
+                            </lightning-combobox>
+                        </div>
+                    </div>
                 </div>
                 <div class="slds-m-vertical_x-small">
                     <lightning-button-group>

@@ -12,6 +12,8 @@ const actions = [
 const columns = [
     { label: 'Name', fieldName: 'Name' },
     { label: 'Is active', fieldName: 'IsActive', type: 'boolean'},
+    { label: 'Start Date', fieldName: 'Start_Date__c', type: 'date'},
+    { label: 'End Date', fieldName: 'End_Date__c', type: 'date'},
     {
         type: 'action',
         typeAttributes: { rowActions: actions },
@@ -41,8 +43,6 @@ export default class SearchPricebook extends LightningElement {
         getPricebooks({ name: this.name })
         .then((result) => {
             this.pricebooks = result;
-            console.log(result);
-            console.log(this.pricebooks);
         })
         .catch(() => {
             this.dispatchEvent(

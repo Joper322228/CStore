@@ -1,28 +1,36 @@
 <template>
-    <lightning-record-edit-form object-api-name="Product_Comment__c" onsuccess={handleSuccess} onsubmit={handleSubmit}>
-        <lightning-layout multiple-rows vertical-align="start">
-            <lightning-layout-item size="4" padding="horizontal-small">
-                <div class="slds-form-element">                    
-                    <label for={nameField} class="slds-form-element__label">{labelSubject}</label>
-                    <div class="slds-form-element__control">
-                        <lightning-input-field variant="label-hidden" field-name={nameField} required></lightning-input-field>
-                    </div>                    
-                </div>
-            </lightning-layout-item>
-            <lightning-layout-item size="4" padding="horizontal-small">
-                <div class="slds-form-element">
-                    <label class="slds-form-element__label" for="record-name">{labelRating}</label>
-                    <div class="slds-form-element__control">
-                        <c-five-star-rating onratingchange={handleRatingChanged}></c-five-star-rating>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+    </template>
+    <template if:true={isCommentForApprove}>
+        <div class="slds-align_absolute-center slds-scrollable_y">Thank you for your comment. After approving you will see it in Comments section</div>
+    </template>
+    <template if:false={isCommentForApprove}>
+        <lightning-record-edit-form object-api-name="Product_Comment__c" onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}>
+            <lightning-layout multiple-rows vertical-align="start">
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <div class="slds-form-element">                    
+                        <label for={nameField} class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{labelSubject}</label>
+                        <div class="slds-form-element__control">
+                            <lightning-input-field variant="label-hidden" field-name={nameField} required></lightning-input-field>
+                        </div>                    
                     </div>
-                </div>
-            </lightning-layout-item>
-            <lightning-layout-item size="6" padding="horizontal-small">
-                <lightning-input-field field-name={commentField} required variant="label-hidden"></lightning-input-field>
-            </lightning-layout-item>
-        </lightning-layout>
-        <div class="slds-m-left_small" style="margin-top: 5px">
-            <lightning-button label="Submit" type="submit" icon-name="utility:save"></lightning-button>
-        </div>
-    </lightning-record-edit-form>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="record-name">{labelRating}</label>
+                        <div class="slds-form-element__control">
+                            <c-five-star-rating onratingchange={handleRatingChanged}></c-five-star-rating>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" padding="horizontal-small">
+                    <lightning-input-field field-name={commentField} required variant="label-hidden"></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-m-left_small" style="margin-top: 5px">
+                <lightning-button label="Submit" type="submit" icon-name="utility:save"></lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </template>
 </template>  

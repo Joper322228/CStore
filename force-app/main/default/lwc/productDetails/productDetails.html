@@ -1,24 +1,11 @@
 <template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
     <template if:true={recordDetails.data}>
     <div class="body">
         <div class="product_img">
-            <!-- <div class="slds-grid">
-                <div class="slds-col">
-                    <div class="slds-align_absolute-center">
-                        <a class="prev" onclick={handlePrev}>&#10094;</a>
-                    </div>
-                </div>
-                <div class="slds-col">
-                    <div class="slds-align_absolute-center">
-                        <img src={currentImgUrl} alt={recordDetails.data.Name}/>
-                    </div>
-                </div>
-                <div class="slds-col">
-                    <div class="slds-align_absolute-center">
-                        <a class="next" onclick={handleNext}>&#10095;</a>
-                    </div>
-                </div>
-            </div> -->
             <div class="container">
                     <div class="slider_container">
                         <a class="prev" onclick={handlePrev}>&#10094;</a>
@@ -37,21 +24,27 @@
         <div class="product_info">
             <div class="seller_info"> </div>
             <div class="product_title">{recordDetails.data.Name}</div>
-            <div class="product_price">€{priceValue}</div>
+            <template if:true={isDiscount}>
+                <div class="title"><h2 style="margin-left: 10px; color: #615F5F; font-size: 16px"><del>€{standartValue}</del></h2></div>
+                <div class="product_price">€{priceValue}</div>
+            </template>
+            <template if:false={isDiscount}>
+                <div class="product_price">€{standartValue}</div>
+            </template>
             <div class="product_price"><c-five-star-rating value={ratingValue} read-only="true"></c-five-star-rating></div>
             <div class="product_model">CODE: {recordDetails.data.ProductCode}</div>
             <div class="product_descr">Family: {recordDetails.data.Family}</div>
             <div class="product_descr">Model: {recordDetails.data.Model__c}</div>
             <div class="product_quantity">
-                <input type="number">
+                <input type="number" onchange={handleCartAmount} value={cartAmount}>
             </div>
-                <div class="add_to_cart">Add to cart</div>
-            </div>
+            <div class="add_to_cart" onclick={handleAddToCard}>Add to cart</div>
         </div>
+    </div>
         <lightning-tabset active-tab-value={activeTab}>
             <div class="slds-m-around_x-small">
                <lightning-tab label="Comments"  value="1" onactive={handleActive}>
-                   <c-comment-review product-id={recordId}></c-comment-review>              
+                   <c-comment-review product-id={recordId} ondeletereview={handleDelete}></c-comment-review>              
                </lightning-tab>
               
                <lightning-tab label="Add comments"  value="2" onactive={handleActive}>

@@ -4,7 +4,7 @@ public with sharing class CS_PricebookManagerController {
     public static List<Pricebook2> getPricebooks(String name){
         List<Pricebook2> pricebooks = new List<Pricebook2>();
 
-        String query = 'SELECT Id, Name, IsActive FROM Pricebook2 ' +
+        String query = 'SELECT Id, Name, IsActive, Start_Date__c, End_Date__c FROM Pricebook2 ' +
             'WHERE Id != null';
 
         if(!String.isBlank(name)){
@@ -42,7 +42,21 @@ public with sharing class CS_PricebookManagerController {
         List<PricebookEntry> pricebookEntries = new List<PricebookEntry>();
 
         for(PricebookEntry pricebookEntry : [SELECT Id, UnitPrice, Pricebook2Id, Product2.Name FROM PricebookEntry WHERE Id IN: entryIds]){
-            pricebookEntry.UnitPrice += (valueForUpdate * pricebookEntry.UnitPrice);
+            pricebookEntry.UnitPrice -= (valueForUpdate * pricebookEntry.UnitPrice);
+            pricebookEntries.add(pricebookEntry);
+        }
+
+        update pricebookEntries;
+
+        return [SELECT Id, UnitPrice, Pricebook2Id, Product2.Name FROM PricebookEntry WHERE Pricebook2Id =: recordId];
+    }
+
+    @AuraEnabled
+    public static List<PricebookEntry> updatePricebookEntriesNewPrice(List<String> entryIds, Double valueForUpdate, String recordId){
+        List<PricebookEntry> pricebookEntries = new List<PricebookEntry>();
+
+        for(PricebookEntry pricebookEntry : [SELECT Id, UnitPrice, Pricebook2Id, Product2.Name FROM PricebookEntry WHERE Id IN: entryIds]){
+            pricebookEntry.UnitPrice = valueForUpdate;
             pricebookEntries.add(pricebookEntry);
         }
 

@@ -50,9 +50,13 @@ public with sharing class CS_ProductDetailsController {
 
         price.add(standartPrice[0]);
 
-        System.debug(price);
-
-
         return price;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<AggregateResult> getProductStandartPrice(String recordId){
+        List<AggregateResult> standartPrice = [SELECT MIN(UnitPrice) FROM PricebookEntry WHERE Product2Id =: recordId AND Pricebook2.IsStandard = true];
+
+        return standartPrice;
     }
 }
