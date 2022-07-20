@@ -58,6 +58,12 @@ public with sharing class CS_ShopingCartController {
     }
 
     @AuraEnabled
+    public static void clearShopingCart(){
+        List<CS_ProductCartWrapper> productCart = new List<CS_ProductCartWrapper>();
+        Cache.Session.put('Shoping', productCart);
+    }
+
+    @AuraEnabled
     public static List<Product2> getProduct(String id){
         return [SELECT 
                     Id, 

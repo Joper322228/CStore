@@ -4,22 +4,26 @@ import { refreshApex } from '@salesforce/apex';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import getProductCart from '@salesforce/apex/CS_ShopingCartController.getProductCart';
 import getProduct from '@salesforce/apex/CS_ShopingCartController.getProduct';
+import SHOPING_CART_IMG from '@salesforce/resourceUrl/Shoping_Cart_Icon';
 
 export default class ShopingCart extends LightningElement {
+    shopingCartImg = SHOPING_CART_IMG;
     isLoading = false;
     productCart = [];
     isDisplay = false;
     isEmpty = false;
     total = 0;
 
+    get orderUrl(){
+        return 'https://computerstore-developer-edition.eu44.force.com/s/neworder';
+    }
+
     getTotal(){
         getProductCart({})
         .then((result) => {
-            console.log(result);
             this.total = 0;
             for (let i = 0; i < result.length; i++) {
                 this.total += result[i].amount * result[i].price;
-                console.log(i);
             }
             this.isLoading = false;
         })
@@ -35,9 +39,10 @@ export default class ShopingCart extends LightningElement {
         this.isLoading = true;
         let result = await getProductCart({})
 
-        if (result.length <= 0) {
+        if (result == null || result.length <= 0) {
             this.isEmpty = true;
             this.isDisplay = false;
+            this.isLoading = false;
             return;
         }
         for (let i = 0; i < result.length; i++) {

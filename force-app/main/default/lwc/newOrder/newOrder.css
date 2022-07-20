@@ -1,0 +1,126 @@
+aside {
+    float: right;
+    position: relative;
+    width: 30%;
+  }
+  
+  .summary {
+    padding: 1rem;
+    width: 250px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-top: 9px;
+  }
+  
+  .summary-total-items {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #ccc;
+    color: #666;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  
+  .summary-subtotal,
+  .summary-total {
+    margin-top: 0px;
+    margin-bottom: 13px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    clear: both;
+    
+    overflow: hidden;
+    padding: 0.5rem 0;
+  }
+
+  .summary-item{
+    border-top: 1px solid #ccc;
+    clear: both;
+    
+    overflow: hidden;
+    padding: 0.5rem 0;
+  }
+  
+  .subtotal-title,
+  .subtotal-value,
+  .total-title,
+  .total-value,
+  .promo-title,
+  .promo-value,
+  .item-title {
+    color: #111;
+    float: left;
+    width: 50%;
+  }
+  
+  .summary-promo {
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+  }
+  
+  .promo-title {
+    float: left;
+    width: 70%;
+  }
+  
+  .promo-value {
+    color: #8B0000;
+    float: left;
+    text-align: right;
+    width: 30%;
+  }
+  
+  .summary-delivery {
+    padding-bottom: 3rem;
+  }
+  
+  .subtotal-value,
+  .total-value {
+    text-align: right;
+  }
+  
+  .total-title {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .item-title {
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+
+  .summary-checkout {
+    display: block;
+  }
+  
+  .checkout-cta {
+    display: block;
+    float: none;
+    font-size: 0.75rem;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0.625rem 0;
+    width: 100%;
+  }
+  
+  .summary-delivery-selection {
+    background-color: #ccc;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    display: block;
+    font-size: 0.625rem;
+    height: 34px;
+    width: 100%;
+  }
+
+  .basket {
+    width: 70%;
+    float: left;
+  }
+
+  .clear {
+    clear: both;
+  }

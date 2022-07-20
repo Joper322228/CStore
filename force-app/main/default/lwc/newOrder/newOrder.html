@@ -1,3 +1,46 @@
 <template>
-    
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
+    <lightning-record-edit-form object-api-name={orderApi} onsuccess={handleSuccess} onerror={handleError}
+            onsubmit={handleSubmit}>
+    <div class="basket">
+        
+            <lightning-messages></lightning-messages>
+
+            <lightning-input-field field-name={shippingAddress} required></lightning-input-field>
+            <lightning-input-field field-name={billingAddress}></lightning-input-field>>
+        
+    </div>
+
+    <aside>
+        <div class="summary">
+            <div class="summary-total-items"><span class="total-items"></span>Summary</div>
+            <template if:true={isDisplay}>
+            <template for:each={productCart} for:item="product">
+                <div class="summary-item" key={product.Id}>
+                <div class="item-title" >{product.Name}x{product.Amount}</div>
+                <div class="total-value final-value">€{product.TotalPrice}</div>
+                </div>
+            </template>
+        </template>
+            <div class="summary-total">
+                <div class="total-title">Total</div>
+                <div class="total-value final-value" id="basket-total">€{total}</div>
+            </div>
+            <lightning-radio-group 
+                name="PaymentType" 
+                label="Payment by" 
+                options={options} 
+                value={paymentValue} 
+                type="radio">
+            </lightning-radio-group>
+
+            <lightning-button class="slds-align_absolute-center slds-m-top_x-small" type="submit" label="Create Order" variant="brand">
+            </lightning-button>
+        </div>
+    </aside>
+    </lightning-record-edit-form>
+    <div class="clear"></div>
 </template>

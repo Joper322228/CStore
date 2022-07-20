@@ -1,6 +1,8 @@
 <template>
     <template if:true={isEmpty}>
-        You have no product in cart
+      <div style="display: flex; justify-content: center;">
+        <img src="https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg" style="height: 400px; width: auto">
+      </div>
     </template>
     <template if:true={isLoading}>
              <lightning-spinner alternative-text="Loading" variant="brand" size="large">
@@ -29,7 +31,9 @@
             <div class="total-value final-value" id="basket-total">{total}</div>
           </div>
           <div class="summary-checkout">
-            <div class="delete_button" onclick={handleRemove}>Go to Checkout</div>
+            <a href={orderUrl}>
+              <div class="delete_button" onclick={handleRemove}>Go to Checkout</div>
+            </a>
           </div>
         </div>
       </aside>
