@@ -1,10 +1,18 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import {
+    subscribe,
+    unsubscribe,
+    APPLICATION_SCOPE,
+    publish,
+    MessageContext
+} from 'lightning/messageService';
 import getProductDetails from '@salesforce/apex/CS_ProductDetailsController.getProductDetails';
 import getProductImages from '@salesforce/apex/CS_ProductDetailsController.getProductImages';
 import getRatingProduct from '@salesforce/apex/CS_ProductDetailsController.getRatingProduct';
 import getProductPrice from '@salesforce/apex/CS_ProductDetailsController.getProductPrice';
 import addProductToCart from '@salesforce/apex/CS_ShopingCartController.addProductToCart';
+import increaseSize from '@salesforce/messageChannel/Shopping_Cart__c';
 
 export default class ProductDetails extends LightningElement {
     @api recordId;
@@ -21,6 +29,15 @@ export default class ProductDetails extends LightningElement {
 
     @wire (getProductDetails, {recordId : '$recordId'})
     recordDetails;
+
+    @wire(MessageContext)
+    messageContext;
+
+    handleIncreaseCart() {
+        const payload = { flag: 1};
+
+        publish(this.messageContext, increaseSize, payload);
+    }
 
     @wire (getProductImages, {recordId : '$recordId'})
     getImages({error, data}){
@@ -90,6 +107,7 @@ export default class ProductDetails extends LightningElement {
         }
         addProductToCart({recordId : this.recordId, amount : this.cartAmount, price : price})
             .then((result) => {
+                this.handleIncreaseCart();
                 const deleteEvent = new ShowToastEvent({
                     title: 'Product added to shoping cart',
                     variant: 'success'

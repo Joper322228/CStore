@@ -3,7 +3,7 @@ public with sharing class CS_NewOrderController {
     @AuraEnabled
     public static String createContract(){
         Contract contract = new Contract(
-            AccountId = '0017Q00000NsYxJQAV',
+            AccountId = '0017Q00000NsYxJQAV',//chadkoded
             StartDate = Date.Today(),
             Status = 'Draft',
             ContractTerm = 1
@@ -48,5 +48,17 @@ public with sharing class CS_NewOrderController {
     @AuraEnabled
     public static List<Pricebook2> getStandartPricebook(){
         return [SELECT Id FROM Pricebook2 WHERE IsStandard = true LIMIT 1];
+    }
+
+    @AuraEnabled
+    public static String getBaseUrl(){
+        Site site = [SELECT Id FROM Site WHERE Name = 'Home' LIMIT 1];
+
+        return [SELECT SecureURL FROM SiteDetail WHERE DurableId =: site.Id].SecureUrl;
+    }
+
+    @AuraEnabled
+    public static String getAccountId(){
+        return [SELECT Id FROM Account WHERE Name = 'LoginAccount' LIMIT 1].Id;
     }
 }

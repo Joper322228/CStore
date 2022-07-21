@@ -2,12 +2,19 @@ import { LightningElement, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
+import {
+    subscribe,
+    unsubscribe,
+    APPLICATION_SCOPE,
+    publish,
+    MessageContext
+} from 'lightning/messageService';
 import getProductCart from '@salesforce/apex/CS_ShopingCartController.getProductCart';
 import getProduct from '@salesforce/apex/CS_ShopingCartController.getProduct';
-import SHOPING_CART_IMG from '@salesforce/resourceUrl/Shoping_Cart_Icon';
+import getBaseUrl from '@salesforce/apex/CS_ShopingCartController.getBaseUrl';
+import increaseSize from '@salesforce/messageChannel/Shopping_Cart__c';
 
 export default class ShopingCart extends LightningElement {
-    shopingCartImg = SHOPING_CART_IMG;
     isLoading = false;
     productCart = [];
     isDisplay = false;
@@ -15,7 +22,20 @@ export default class ShopingCart extends LightningElement {
     total = 0;
 
     get orderUrl(){
-        return 'https://computerstore-developer-edition.eu44.force.com/s/neworder';
+        let url = this.baseUrl.data + '/s/neworder';
+        return url;
+    }
+
+    @wire(getBaseUrl, {})
+    baseUrl;
+
+    @wire(MessageContext)
+    messageContext;
+
+    handleIncreaseCart() {
+        const payload = { flag: 1};
+
+        publish(this.messageContext, increaseSize, payload);
     }
 
     getTotal(){
@@ -87,6 +107,7 @@ export default class ShopingCart extends LightningElement {
             title: 'Product removed from shoping cart',
         });
         this.dispatchEvent(deleteEvent);
+        this.handleIncreaseCart();
     }
 
 }

@@ -1,8 +1,17 @@
 import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import {
+    subscribe,
+    unsubscribe,
+    APPLICATION_SCOPE,
+    publish,
+    MessageContext
+} from 'lightning/messageService';
 import getProductPrice from '@salesforce/apex/CS_ProductDetailsController.getProductPrice';
 import getProductStandartPrice from '@salesforce/apex/CS_ProductDetailsController.getProductStandartPrice';
 import addProductToCart from '@salesforce/apex/CS_ShopingCartController.addProductToCart';
+import getBaseUrl from '@salesforce/apex/CS_ShopingCartController.getBaseUrl';
+import increaseSize from '@salesforce/messageChannel/Shopping_Cart__c';
 
 export default class ProductCard extends LightningElement {
     @api product;
@@ -12,8 +21,20 @@ export default class ProductCard extends LightningElement {
     isLoading = false;
 
     get detailsUrl(){
-        return 'https://computerstore-developer-edition.eu44.force.com/s/product/Product2/' +
-            this.product.Id;
+        let url = this.baseUrl.data + '/s/product/Product2/' + this.product.Id;
+        return url;
+    }
+
+    @wire(getBaseUrl, {})
+    baseUrl;
+
+    @wire(MessageContext)
+    messageContext;
+
+    handleIncreaseCart() {
+        const payload = { flag: 1};
+
+        publish(this.messageContext, increaseSize, payload);
     }
 
     @wire (getProductPrice, {recordId : '$product.Id'})
@@ -31,7 +52,12 @@ export default class ProductCard extends LightningElement {
                 }
             }
         } else{
-            console.log(error);
+            const toast = new ShowToastEvent({
+                title: 'Unexpected error',
+                message: error,
+                variant: 'error',
+            });
+            this.dispatchEvent(toast);
         }
     }
 
@@ -43,14 +69,15 @@ export default class ProductCard extends LightningElement {
         } else{
             price = this.standartValue;
         }
-        console.log('test');
         addProductToCart({recordId : this.product.Id, amount : 1, price : price})
             .then((result) => {
+                this.handleIncreaseCart();
                 const deleteEvent = new ShowToastEvent({
                     title: 'Product added to shoping cart',
                     variant: 'success'
                 });
                 this.dispatchEvent(deleteEvent);
+                
                 this.isLoading = false;
             })
             .catch((error) => {

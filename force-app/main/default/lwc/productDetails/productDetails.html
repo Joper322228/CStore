@@ -15,7 +15,6 @@
                         <img src={currentImgUrl} alt={recordDetails.data.Name}/>
                     </div>
 
-
                     <div class="slider_container">
                         <a class="next" onclick={handleNext}>&#10095;</a>
                     </div>
@@ -36,6 +35,7 @@
             <div class="product_descr">Family: {recordDetails.data.Family}</div>
             <div class="product_descr">Model: {recordDetails.data.Model__c}</div>
             <div class="product_quantity">
+                <div class="product_descr" style="padding-left: 0px">Quantity:</div>
                 <input type="number" onchange={handleCartAmount} value={cartAmount}>
             </div>
             <div class="add_to_cart" onclick={handleAddToCard}>Add to cart</div>

@@ -1,31 +1,25 @@
 import { LightningElement } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { NavigationMixin } from 'lightning/navigation';
 import ORDER from '@salesforce/schema/Order';
-import NAME_FIELD from '@salesforce/schema/Order.Name';
-import CONTRACT_FIELD from '@salesforce/schema/Order.ContractId';
-import ACCOUNT_FIELD from '@salesforce/schema/Order.AccountId';
-import STATUS_FIELD from '@salesforce/schema/Order.Status';
-import START_DATE_FIELD from '@salesforce/schema/Order.EffectiveDate';
 import BILLING_FIELD from '@salesforce/schema/Order.BillingAddress';
 import SHIPPING_FIELD from '@salesforce/schema/Order.ShippingAddress';
 import createContract from '@salesforce/apex/CS_NewOrderController.createContract';
 import getStandartPricebook from '@salesforce/apex/CS_NewOrderController.getStandartPricebook';
 import createOrderItems from '@salesforce/apex/CS_NewOrderController.createOrderItems';
+import getBaseUrl from '@salesforce/apex/CS_NewOrderController.getBaseUrl';
+import getAccountId from '@salesforce/apex/CS_NewOrderController.getAccountId';
 import getProductCart from '@salesforce/apex/CS_ShopingCartController.getProductCart';
 import getProduct from '@salesforce/apex/CS_ShopingCartController.getProduct';
 import clearShopingCart from '@salesforce/apex/CS_ShopingCartController.clearShopingCart';
+import card from '@salesforce/label/c.CS_Card';
+import cash from '@salesforce/label/c.CS_Cash';
+import blik from '@salesforce/label/c.CS_RuBlik';
 import Id from '@salesforce/user/Id';
 
 export default class NewOrder extends LightningElement {
     userId = Id;
     isLoading = false;
     orderApi = ORDER;
-    name = NAME_FIELD;
-    contract = CONTRACT_FIELD;
-    account = ACCOUNT_FIELD;
-    status = STATUS_FIELD;
-    startDate = START_DATE_FIELD;
     billingAddress = BILLING_FIELD;
     shippingAddress = SHIPPING_FIELD;
     productCart = [];
@@ -35,9 +29,9 @@ export default class NewOrder extends LightningElement {
 
     get options() {
         return [
-            { label: 'Card', value: 'card' },
-            { label: 'Cash on delivery', value: 'cash' },
-            { label: 'RuBlik', value: 'rublik' },
+            { label: card, value: 'card' },
+            { label: cash, value: 'cash' },
+            { label: blik, value: 'rublik' },
         ];
     }
 
@@ -80,12 +74,11 @@ export default class NewOrder extends LightningElement {
     async handleSubmit(event) {
         event.preventDefault();
         this.isLoading = true;
-        let contractId = await createContract({})
         let pricebookId = await getStandartPricebook({});
+        let accountId = await getAccountId({});
 
         const fields = event.detail.fields;
-        fields.AccountId = '0017Q00000NsYxJQAV';
-        fields.ContractId = contractId;
+        fields.AccountId = accountId;
         fields.EffectiveDate = this.formatDate(new Date());
         fields.Status = 'Draft';
         fields.Pricebook2Id = pricebookId[0].Id;
@@ -116,11 +109,14 @@ export default class NewOrder extends LightningElement {
                 this.isLoading = false;
                 clearShopingCart({})
                 .then((result) => {
-                    window.location.replace('https://computerstore-developer-edition.eu44.force.com/s/order/' + event.detail.id);
+                    getBaseUrl({})
+                    .then((result) => {
+                        window.location.replace(result + '/s/order/' + event.detail.id);
+                    })
+                    
                 })
             })
             .catch((error) => {
-                console.log(JSON.parse(JSON.stringify(error)));
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: "Error creating order",
