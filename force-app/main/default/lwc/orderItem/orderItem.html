@@ -1,0 +1,43 @@
+<template>
+    <lightning-card class="slds-m-around_x-small">
+        <div class="slds-m-left_medium">
+            Order: {order.OrderNumber}
+            <lightning-button label="Details" variant="brand" class="slds-float_right slds-m-right_small"
+                onclick={handleOpenModal}></lightning-button>
+        </div>
+        <div class="slds-m-left_medium">Start date: {order.EffectiveDate}</div>
+        <div class="slds-m-left_medium">Total amount: €{order.TotalAmount}</div>
+        <div class="slds-m-left_medium">Status: {order.Status}</div>
+
+    </lightning-card>
+    <template if:true={openModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Order details</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <c-salesforce-codex-data-table 
+                        key-field="id" 
+                        data={orderItems} 
+                        columns={columns}
+                        show-row-number-column="false"
+                        hide-checkbox-column="false">
+                    </c-salesforce-codex-data-table >
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close"
+                        onclick={handleCloseModal}>Close</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

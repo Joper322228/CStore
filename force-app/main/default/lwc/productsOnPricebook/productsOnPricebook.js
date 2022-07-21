@@ -21,7 +21,13 @@ export default class ProductsOnPricebook extends LightningElement {
             this.products = result;
         })
         .catch((error) => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Unexpected error",
+                  message: error,
+                  variant: "Error"
+                })
+            );
         })
     }
 
@@ -35,7 +41,13 @@ export default class ProductsOnPricebook extends LightningElement {
             this.products = result;
         })
         .catch(() => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Unexpected error",
+                  message: error,
+                  variant: "Error"
+                })
+            );
         })
     }
 

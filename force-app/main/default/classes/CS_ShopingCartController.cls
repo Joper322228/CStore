@@ -58,6 +58,11 @@ public with sharing class CS_ShopingCartController {
     }
 
     @AuraEnabled
+    public static Integer getProductCartSize(){
+        return ((List<CS_ProductCartWrapper>)Cache.Session.get('Shoping')).size();
+    }
+
+    @AuraEnabled
     public static void clearShopingCart(){
         List<CS_ProductCartWrapper> productCart = new List<CS_ProductCartWrapper>();
         Cache.Session.put('Shoping', productCart);
@@ -79,5 +84,12 @@ public with sharing class CS_ShopingCartController {
                     WHERE Id =: id 
                     LIMIT 1
                 ];
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String getBaseUrl(){
+        Site site = [SELECT Id FROM Site WHERE Name = 'Home' LIMIT 1];
+
+        return [SELECT SecureURL FROM SiteDetail WHERE DurableId =: site.Id].SecureUrl;
     }
 }

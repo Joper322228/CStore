@@ -1,11 +1,7 @@
 import { LightningElement, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { subscribe, APPLICATION_SCOPE, MessageContext } from 'lightning/messageService';
 import selectPricebook from '@salesforce/messageChannel/Pricebook_Selected__c';
-import {
-    subscribe,
-    unsubscribe,
-    APPLICATION_SCOPE,
-    MessageContext
-} from 'lightning/messageService';
 import getPricebookEntries from '@salesforce/apex/CS_PricebookManagerController.getPricebookEntries';
 import updatePricebookEntriesCurrency from '@salesforce/apex/CS_PricebookManagerController.updatePricebookEntriesCurrency';
 import updatePricebookEntriesPercentage from '@salesforce/apex/CS_PricebookManagerController.updatePricebookEntriesPercentage';
@@ -77,9 +73,7 @@ export default class ViewPricebook extends LightningElement {
         this.recordId = message.recordId;
         getPricebookEntries({recordId: this.recordId})
         .then((result) => {
-            //this.pricebookEntries = result;
             this.pricebookEntries = [];
-            console.log(this.recordId);
             for(let i = 0; i < result.length; i++){
                 let pricebookEntry = {
                     Id: result[i].Id,
@@ -91,7 +85,13 @@ export default class ViewPricebook extends LightningElement {
             }
         })
         .catch((error) => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Unexpected error",
+                  message: error,
+                  variant: "Error"
+                })
+            );
         })
     }
 
@@ -115,7 +115,13 @@ export default class ViewPricebook extends LightningElement {
             }
         })
         .catch((error) => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Unexpected error",
+                  message: error,
+                  variant: "Error"
+                })
+            );
         })
     }
 
@@ -135,7 +141,13 @@ export default class ViewPricebook extends LightningElement {
             }
         })
         .catch((error) => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Unexpected error",
+                  message: error,
+                  variant: "Error"
+                })
+            );
         })
     }
 
@@ -155,7 +167,13 @@ export default class ViewPricebook extends LightningElement {
             }
         })
         .catch((error) => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Unexpected error",
+                  message: error,
+                  variant: "Error"
+                })
+            );
         })
     }
 
@@ -172,7 +190,6 @@ export default class ViewPricebook extends LightningElement {
         getPricebookEntries({recordId: this.recordId})
         .then((result) => {
             this.pricebookEntries = [];
-            console.log(this.recordId);
             for(let i = 0; i < result.length; i++){
                 let pricebookEntry = {
                     Id: result[i].Id,
@@ -184,7 +201,13 @@ export default class ViewPricebook extends LightningElement {
             }
         })
         .catch((error) => {
-            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                  title: "Unexpected error",
+                  message: error,
+                  variant: "Error"
+                })
+            );
         })
     }
 
@@ -209,7 +232,13 @@ export default class ViewPricebook extends LightningElement {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                      title: "Unexpected error",
+                      message: error,
+                      variant: "Error"
+                    })
+                );
             })
         } 
         if(this.useValue){
@@ -227,7 +256,13 @@ export default class ViewPricebook extends LightningElement {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                      title: "Unexpected error",
+                      message: error,
+                      variant: "Error"
+                    })
+                );
             })
         }
         if(this.useNew){
@@ -245,11 +280,14 @@ export default class ViewPricebook extends LightningElement {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                      title: "Unexpected error",
+                      message: error,
+                      variant: "Error"
+                    })
+                );
             })
-        }
-        if(this.useNew){
-
         }
     }
 }

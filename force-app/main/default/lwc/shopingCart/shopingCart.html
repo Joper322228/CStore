@@ -31,9 +31,11 @@
             <div class="total-value final-value" id="basket-total">{total}</div>
           </div>
           <div class="summary-checkout">
+            <template if:true={orderUrl}>
             <a href={orderUrl}>
               <div class="delete_button" onclick={handleRemove}>Go to Checkout</div>
             </a>
+          </template>
           </div>
         </div>
       </aside>

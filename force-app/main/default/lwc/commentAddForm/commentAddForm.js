@@ -26,11 +26,9 @@ export default class CommentAddForm extends LightningElement {
         this.getComment();
     }
 
-    // @wire(getCommentForUser, {productId: '$productId', userId: '$userId'})
     getComment(){
         getCommentForUser({productId: this.productId, userId: this.userId})
         .then((result) => {
-            console.log(result);
             this.commentsToUser = result;
             if(this.commentsToUser > 0){
                 this.isCommentForApprove = true;
@@ -74,8 +72,6 @@ export default class CommentAddForm extends LightningElement {
         this.dispatchEvent(toast);
         this.isCommentForApprove = true;
         this.isLoading = false;
-        console.log(this.isCommentForApprove);
-        
     }
 
     handleError(event) {

@@ -54,7 +54,12 @@ export default class CommentReview extends LightningElement {
                     }
                 }
             }).catch((error) => {
-                console.log(error);
+                const toast = new ShowToastEvent({
+                    title: 'Your commnent was edited',
+                    message: error,
+                    variant: 'error',
+                });
+                this.dispatchEvent(toast);
             })
         } else {
             return;
@@ -75,7 +80,6 @@ export default class CommentReview extends LightningElement {
     }
 
     handleDelete(){
-        console.log(this.commentIdForDelete);
         this.handleCloseDeleteModal();
         deleteComment({commentId: this.commentIdForDelete})
         .then((result) => {
@@ -83,7 +87,12 @@ export default class CommentReview extends LightningElement {
             const createReviewEvent = new CustomEvent('deletereview');
             this.dispatchEvent(createReviewEvent);       
         }).catch((error) => {
-            console.log(error);
+            const toast = new ShowToastEvent({
+                title: 'Your commnent was edited',
+                message: error,
+                variant: 'error',
+            });
+            this.dispatchEvent(toast);
         })
     }
 
@@ -105,6 +114,7 @@ export default class CommentReview extends LightningElement {
             message: 'Please wait until your comment will be approved',
             variant: 'success',
         });
+        this.dispatchEvent(toast);
     }
 
     handleSubmit(event) {
