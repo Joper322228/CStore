@@ -26,15 +26,15 @@ public with sharing class CS_ProductDetailsController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<ContentVersion> getProductImages(String recordId){
+    public static List<ContentDocumentLink> getProductImages(String recordId){
         
         return [
             SELECT
             Id,
-            ContentDocumentId
-            FROM ContentVersion
-            WHERE FirstPublishLocationId =: recordId
-            ORDER BY CreatedDate DESC
+            ContentDocumentId,
+            LinkedEntityId 
+            FROM ContentDocumentLink 
+            WHERE LinkedEntityId =: recordId
 		]; 
     }
 

@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 70%;
+    padding: 20px;
+    padding-top: 0px;
+    float: left;
+}
+.filters{
+    padding: 20px;
+    width: 30%;
+    float: left;
+}
+.card_wrapper{
+    height: 200px;
+    width: 200px;
+}
+
+.clear {
+    clear: both;
+}

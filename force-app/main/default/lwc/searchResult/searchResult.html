@@ -1,0 +1,54 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+   </template>
+    <div class="filters">
+        <div class="slds-m-around_medium">
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input type="text" value={name} label="Product Name" onchange={handleName}>
+                    </lightning-input>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input type="text" value={model} label="Model" onchange={handleModel}>
+                    </lightning-input>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input type="text" value={mark} label="Mark" onchange={handleMark}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <lightning-button label="Search" onclick={handleSearch} class="slds-m-top_xx-small slds-align_absolute-center"></lightning-button>
+        </div>
+    </div>
+    <template if:true={isEmpty}>
+        <div class="slds-align_absolute-center">
+            Sory we we have not such products
+        </div>
+    </template>
+    <template if:false={isEmpty}>
+        <lightning-button-group style="margin-left: 235px;">
+            <lightning-button label="First" onclick={handleFirst} disabled={isFirst}></lightning-button>
+            <lightning-button label="Previous" onclick={handlePrevious} disabled={isFirst}></lightning-button>
+            <lightning-button label="Next" onclick={handleNext} disabled={isLast}></lightning-button>
+            <lightning-button label="Last" onclick={handleLast} disabled={isLast}></lightning-button>
+            
+        </lightning-button-group>
+        <div class="slds-align_absolute-center">
+            Current page {pageNumberForPrint}/{maxPages}
+        </div>
+        <div class="container">
+            <template for:each={pageData} for:item="product">
+                <c-product-card product={product} key={product.id}></c-product-card>
+            </template>
+        </div>
+    </template>
+    <div class="clear"></div>
+</template>
