@@ -1,29 +1,7 @@
 <template>
-    <!-- <div class="slds-grid">
-        <div class="slds-col">
-            <div class="slds-align_absolute-center">
-                <a class="prev" onclick={handlePrev}>&#10094;</a>
-            </div>
-        </div>
-        <div class="slds-col">
-            <div class="slds-align_absolute-center">
-                <c-product-card product={currentProduct} details-url={currentProductDetailsUrl}></c-product-card>
-            </div>
-        </div>
-        <div class="slds-col">
-            <div class="slds-align_absolute-center">
-                <a class="next" onclick={handleNext}>&#10095;</a>
-            </div>
-        </div>
-    </div> -->
-    
-        <!-- <div>
-            <c-product-card product={currentProduct}></c-product-card>
-        </div> -->
-        <div class="container">
-            <template for:each={newestProducts} for:item="product">
-                <c-product-card product={product} key={product.id} ></c-product-card>
-            </template>
-        </div>
-    
+    <div class="container">
+        <template for:each={newestProducts} for:item="product">
+            <c-product-card product={product} key={product.id}></c-product-card>
+        </template>
+    </div>
 </template>
