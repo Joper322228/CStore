@@ -4,7 +4,7 @@
     </template>
     <template if:true={userOrders}>
         <template for:each={userOrders} for:item="order">
-            <div style="width: 500px; margin-left: 280px"  key={order.Id}>
+            <div style="width: 500px; margin-left: 280px; min-height: 510px" class="slds-scrollable_y"  key={order.Id}>
                 <c-order-item order={order} ></c-order-item>
             </div>
         </template>
