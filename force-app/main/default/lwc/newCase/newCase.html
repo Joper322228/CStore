@@ -1,0 +1,24 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
+    <div style="margin: auto; width: 55%; min-height: 515px;">
+    <lightning-record-edit-form object-api-name={caseApi} onsuccess={handleSuccess}>
+        <lightning-messages></lightning-messages>
+
+        <label for="reasonField"><abbr class="slds-required" title="required">* </abbr>Reason</label>
+        <lightning-input-field id="reasonField" field-name={reasonField} variant="label-hidden" required></lightning-input-field>
+        <label for="subjectField"><abbr class="slds-required" title="required">* </abbr>Subject</label>
+        <lightning-input-field id="subjectField" field-name={subjectField} variant="label-hidden" required></lightning-input-field>
+        <label for="descriptionField"><abbr class="slds-required" title="required">* </abbr>Description</label>
+        <lightning-input-field id="descriptionField" field-name={descriptionField} variant="label-hidden" required></lightning-input-field>
+        <lightning-combobox name='order' label='Order' options={orderOptions} onchange={handleOrder} required>
+        </lightning-combobox>
+        <lightning-combobox name='product' label='Product' options={productOptions} onchange={handleProduct} required>
+        </lightning-combobox>
+
+        <lightning-button class="slds-align_absolute-center slds-m-top_x-small" label="Submit" variant="brand" type="submit"></lightning-button>
+    </lightning-record-edit-form>
+</div>
+</template>
