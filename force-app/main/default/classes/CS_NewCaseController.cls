@@ -10,4 +10,16 @@ public with sharing class CS_NewCaseController {
         return [SELECT Id, OrderNumber, EffectiveDate FROM Order WHERE CreatedById =: UserInfo.getUserId()];
     }
 
+    @AuraEnabled
+    public static void setAssingmentRule(String caseId){
+        AssignmentRule AR = new AssignmentRule();
+        AR = [SELECT id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];
+
+        Database.DMLOptions dmlOpts = new Database.DMLOptions();
+        dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+
+        Case caseForUpdate = [SELECT Id FROM Case WHERE Id =: caseId];
+        caseForUpdate.setOptions(dmlOpts);
+        update caseForUpdate;
+    }
 }
