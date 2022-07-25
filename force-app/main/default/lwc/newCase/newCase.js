@@ -8,6 +8,7 @@ import REASON_FIELD from '@salesforce/schema/Case.Reason';
 import SUBJECT_FIELD from '@salesforce/schema/Case.Subject';
 import getOrders from '@salesforce/apex/CS_NewCaseController.getOrders';
 import getOrderedProducts from '@salesforce/apex/CS_NewCaseController.getOrderedProducts';
+import setAssingmentRule from '@salesforce/apex/CS_NewCaseController.setAssingmentRule';
 import getBaseUrl from '@salesforce/apex/CS_NewOrderController.getBaseUrl';
 
 export default class NewCase extends LightningElement {
@@ -93,10 +94,16 @@ export default class NewCase extends LightningElement {
                 variant: "success"
             })
         );
-        this.isLoading = false;
-        getBaseUrl({})
+        setAssingmentRule({caseId : event.detail.id})
+        .then((result) =>{
+            getBaseUrl({})
             .then((result) => {
+                this.isLoading = false;
                 window.location.replace(result + '/s/case/' + event.detail.id);
             })
+        })
+        .catch((error) =>{
+            console.log(error);
+        })
     }
 }
