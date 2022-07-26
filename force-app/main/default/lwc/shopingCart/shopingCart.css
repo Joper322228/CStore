@@ -353,6 +353,12 @@ a {
     background-color: #202020d8;
     
   }
+
+  .image{
+    display: flex; 
+    justify-content: center; 
+    min-height: 520px;
+  }
   
   @media screen and (max-width: 640px) {
     aside,
