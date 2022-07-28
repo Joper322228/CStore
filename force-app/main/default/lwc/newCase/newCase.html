@@ -4,7 +4,7 @@
         </lightning-spinner>
     </template>
     <div style="margin: auto; width: 55%; min-height: 515px;">
-    <lightning-record-edit-form object-api-name={caseApi} onsuccess={handleSuccess}>
+    <lightning-record-edit-form object-api-name={caseApi} onsuccess={handleSuccess} onsubmit={handleSubmit}>
         <lightning-messages></lightning-messages>
 
         <label for="reasonField"><abbr class="slds-required" title="required">* </abbr>Reason</label>

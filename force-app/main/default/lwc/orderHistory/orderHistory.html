@@ -1,12 +1,20 @@
 <template>
     <template if:true={isEmpty}>
-        You have no order at this moment
+        <div style="display: flex; justify-content: center; min-height: 520px;">
+            <img src={noOrder} style="height: 300px; width: auto">
+        </div>
     </template>
+    <template if:false={isEmpty}>
     <template if:true={userOrders}>
-        <template for:each={userOrders} for:item="order">
-            <div style="width: 500px; margin-left: 280px; min-height: 510px" class="slds-scrollable_y"  key={order.Id}>
-                <c-order-item order={order} ></c-order-item>
+        <div style="min-height: 520px;">
+            <div class="slds-grid slds-wrap slds-grid_align-space">
+                <template for:each={userOrders} for:item="order">
+                    <div class="slds-col slds-size_6-of-12 " key={order.Id}>
+                        <c-order-item order={order}></c-order-item>
+                    </div>
+                </template>
             </div>
-        </template>
-    </template>  
+        </div>
+    </template>
+</template>
 </template>

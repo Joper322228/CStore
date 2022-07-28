@@ -1,24 +1,34 @@
 <template>
     <template if:true={isEmpty}>
-        You have no order at this moment
-    </template>
-    <template if:true={userCases}>
-        <div style="width: 500px; margin-left: 280px; min-height: 510px" class="slds-scrollable_y" >
-            <template for:each={userCases} for:item="userCase">
-                
-                    <lightning-card class="slds-m-around_x-small"  key={userCase.Id}>
-                        <div class="slds-m-left_medium">
-                            Case: {userCase.CaseNumber}
-                            <lightning-button label="Details" variant="brand" class="slds-float_right slds-m-right_small"
-                                onclick={handleDetails} data-id={userCase.Id}></lightning-button>
-                        </div>
-                        <div class="slds-m-left_medium">Status: {userCase.Status}</div>
-                        <div class="slds-m-left_medium">Reason: {userCase.Reason}</div>
-                        <div class="slds-m-left_medium">Subject: {userCase.Subject}</div>
-                
-                    </lightning-card>
-                
-            </template>
+        <div style="display: flex; justify-content: center; min-height: 520px;">
+            <img src={noCase} style="height: 300px; width: auto">
         </div>
-    </template>  
+    </template>
+    <template if:false={isEmpty}>
+        <template if:true={userCases}>
+            <lightning-button label="Make complaint" variant="brand" class="slds-align_absolute-center"
+                onclick={handleNewCase}></lightning-button>
+           
+            <div style="min-height: 520px;">
+            <div class="slds-grid slds-wrap slds-grid_align-space">
+                <template for:each={userCases} for:item="userCase">
+                    <div class="slds-col slds-size_6-of-12 " key={userCase.Id}>
+                        <lightning-card class="slds-m-around_small" >
+                            <div class="slds-m-left_medium">
+                                Complaint: {userCase.CaseNumber}
+                                <lightning-button label="Details" variant="brand"
+                                    class="slds-float_right slds-m-right_small" onclick={handleDetails}
+                                    data-id={userCase.Id}></lightning-button>
+                            </div>
+                            <div class="slds-m-left_medium">Status: {userCase.Status}</div>
+                            <div class="slds-m-left_medium">Reason: {userCase.Reason}</div>
+                            <div class="slds-m-left_medium">Subject: {userCase.Subject}</div>
+
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+        </div>
+        </template>
+    </template>
 </template>

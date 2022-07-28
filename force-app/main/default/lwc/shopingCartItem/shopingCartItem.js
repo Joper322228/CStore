@@ -16,8 +16,19 @@ export default class ShopingCartItem extends LightningElement {
     }
     
     handleQuantity(event){
-        let amount = event.target.value;
-        this.productAmount = event.target.value;
+        if(event.target.value <= 0){
+            let amount = 1;
+            this.productAmount = 1;
+            this.template.querySelector('input').value = 1;
+        } else
+        if(event.target.value >= 100){
+            let amount = 99;
+            this.productAmount = 99;
+            this.template.querySelector('input').value = 99;
+        } else{
+            let amount = event.target.value;
+            this.productAmount = event.target.value;
+        }
         updateAmount({recordId : this.productItem.Id, amount : amount})
             .then((result) => {
                 this.dispatchEvent(new CustomEvent('updatedquantity'));

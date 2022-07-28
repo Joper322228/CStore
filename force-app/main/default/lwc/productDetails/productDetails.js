@@ -149,6 +149,10 @@ export default class ProductDetails extends LightningElement {
         if(event.target.value <= 0){
             this.cartAmount = 1;
             this.template.querySelector('input').value = 1;
+        } else
+        if(event.target.value >= 100){
+            this.cartAmount = 99;
+            this.template.querySelector('input').value = 99;
         } else{
             this.cartAmount = event.target.value;
         }
