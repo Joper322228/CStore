@@ -3,7 +3,13 @@ import getOrderItems from '@salesforce/apex/CS_OrderHistoryController.getOrderIt
 
 const columns = [
     { label: 'Image', fieldName: 'DisplayUrl', type:'image' },
-    { label: 'Name', fieldName: 'Name'},
+    { label: 'Name', fieldName: 'ProductUrl', type:'url',
+        typeAttributes:{
+            label:{
+                fieldName:'Name'
+            }
+        }
+    },
     { label: 'Quantity', fieldName: 'Quantity',},
     { label: 'Price', fieldName: 'Price', type: 'currency' },
 ];
@@ -22,6 +28,7 @@ export default class OrderItem extends LightningElement {
             for(let i = 0; i < data.length; i++){
                 let orderItem = {
                     DisplayUrl: data[i].Product2.DisplayUrl,
+                    ProductUrl: window.location.origin + '/s/product/' + data[i].Product2.Id,
                     Name: data[i].Product2.Name,
                     Quantity: data[i].Quantity,
                     Price: data[i].UnitPrice,

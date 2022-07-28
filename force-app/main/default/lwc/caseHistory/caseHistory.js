@@ -9,7 +9,7 @@ export default class CaseHistory extends LightningElement {
     @track userCases = [];
     isEmpty = false;
     noCase = NO_CASE;
-    
+
     @wire(getUserCases, {})
     getCases({ error, data }) {
         if (data) {
@@ -33,6 +33,14 @@ export default class CaseHistory extends LightningElement {
         getBaseUrl({})
         .then((result) => {
             window.location.replace(result + '/s/case/' + id);
+        })
+    }
+
+    handleNewCase(event){
+        let id = event.target.dataset.id;
+        getBaseUrl({})
+        .then((result) => {
+            window.location.replace(result + '/s/contactsupport');
         })
     }
 }

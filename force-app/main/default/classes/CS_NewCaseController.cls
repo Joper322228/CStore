@@ -1,4 +1,4 @@
-public with sharing class CS_NewCaseController {
+public without sharing class CS_NewCaseController {
 
     @AuraEnabled(cacheable=true)
     public static List<OrderItem> getOrderedProducts(String orderId){
@@ -18,7 +18,7 @@ public with sharing class CS_NewCaseController {
         Database.DMLOptions dmlOpts = new Database.DMLOptions();
         dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
 
-        Case caseForUpdate = [SELECT Id FROM Case WHERE Id =: caseId];
+        Case caseForUpdate = [SELECT Id, Order__c, ProductId FROM Case WHERE Id =: caseId];
         caseForUpdate.setOptions(dmlOpts);
         update caseForUpdate;
     }

@@ -36,7 +36,7 @@
             <div class="product_descr">Model: {recordDetails.data.Model__c}</div>
             <div class="product_quantity">
                 <div class="product_descr" style="padding-left: 0px">Quantity:</div>
-                <input type="number" onchange={handleCartAmount} value={cartAmount}>
+                <input type="number" onchange={handleCartAmount} value={cartAmount} min="1" max="99">
             </div>
             <div class="add_to_cart" onclick={handleAddToCard}>Add to cart</div>
         </div>

@@ -1,0 +1,15 @@
+<template>
+    <div class="faq">
+        <h1>FAQ</h1>
+        <ul>
+            <template for:each={listKnowledge} for:item='knowledgeItem'>
+                <li key={knowledgeItem.Id}>
+                    <input type="checkbox" checked>
+                    <i></i>
+                    <h2>{knowledgeItem.Parent.Question__c}</h2>
+                    <p>{knowledgeItem.Parent.Answer__c}</p>
+                </li>
+            </template>
+        </ul>
+    </div>
+</template>

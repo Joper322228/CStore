@@ -104,6 +104,12 @@ export default class NewCase extends LightningElement {
         })
         .catch((error) =>{
             console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: "Unexpected error",
+                    variant: "error"
+                })
+            );
         })
     }
 }

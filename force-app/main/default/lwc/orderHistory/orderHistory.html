@@ -6,10 +6,14 @@
     </template>
     <template if:false={isEmpty}>
     <template if:true={userOrders}>
-        <div style="width: 500px; margin-left: 280px; height: 510px" class="slds-scrollable_y">
-            <template for:each={userOrders} for:item="order">
-                <c-order-item order={order} key={order.Id}></c-order-item>
-            </template>
+        <div style="min-height: 520px;">
+            <div class="slds-grid slds-wrap slds-grid_align-space">
+                <template for:each={userOrders} for:item="order">
+                    <div class="slds-col slds-size_6-of-12 " key={order.Id}>
+                        <c-order-item order={order}></c-order-item>
+                    </div>
+                </template>
+            </div>
         </div>
     </template>
 </template>
